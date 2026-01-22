@@ -142,7 +142,7 @@ propuesta.addEventListener("input", () => {
 document.querySelector('label[for="fotosAdjuntas"]').addEventListener("click", () => fotosAdjuntas.click());
 
 // ===== INICIALIZAR EMAILJS =====
-emailjs.init('LDoX4z6Ga9YnZOg44Ugzz'); // Reemplaza con tu User ID de EmailJS
+emailjs.init('paou8pXUBiwdx5WuH'); // Reemplaza con tu User ID de EmailJS
 
 // ===== ENVÍO FORMULARIO =====
 form.addEventListener("submit", e => {
@@ -200,4 +200,5 @@ function enviarEmail(params) {
       alert("Error enviando el formulario, intenta nuevamente.");
     });
 }
+
 
