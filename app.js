@@ -179,3 +179,25 @@ lugarMejora.addEventListener("change", () => {
 otrosLugar.addEventListener("input", () => {
   propuestaBlock.classList.toggle("hidden", !otrosLugar.value.trim());
 });
+
+const contadorPropuesta = document.getElementById("contadorPropuesta");
+
+// Contador en tiempo real
+propuesta.addEventListener("input", () => {
+  const length = propuesta.value.length;
+  contadorPropuesta.textContent = `${length} / 500`;
+});
+
+// Validación antes de enviar
+const form = document.getElementById("formulario");
+
+form.addEventListener("submit", (e) => {
+  // Si el bloque de propuesta está visible, es obligatorio escribir algo
+  if (!propuestaBlock.classList.contains("hidden") && !propuesta.value.trim()) {
+    alert("Debes describir la propuesta de mejora antes de continuar");
+    propuesta.focus();
+    e.preventDefault(); // evitar envío
+  }
+});
+
+
