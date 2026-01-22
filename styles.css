@@ -73,64 +73,63 @@ input:focus, select:focus {
 .checkbox-container {
   display: flex;
   justify-content: center; /* centrar horizontal */
-  align-items: center;     /* centrar vertical */
   margin: 1em 0;
   cursor: pointer;
   user-select: none;
   transition: transform 0.2s ease; /* animación al click */
 }
 
-/* Ocultar checkbox nativo */
 .checkbox-container input[type="checkbox"] {
-  display: none;
+  display: none; /* ocultar checkbox nativo */
 }
 
-/* Label con espacio para cuadro y centrado */
+/* Label con espacio para cuadro */
 .checkbox-container label {
   position: relative;
-  padding-left: 30px; /* espacio para el cuadro */
+  padding-left: 30px;
   font-size: 16px;
   color: var(--text);
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  cursor: pointer;
 }
 
 /* Cuadro del checkbox */
 .checkbox-container label::before {
   content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
   width: 20px;
   height: 20px;
   border: 2px solid var(--saica-green);
   border-radius: 4px;
   background-color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   transition: all 0.2s ease;
+  box-sizing: border-box;
 }
 
-/* Fondo verde cuando está marcado */
+/* Tick del checkbox */
+.checkbox-container label::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg) scale(0);
+  width: 6px;
+  height: 12px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transition: transform 0.2s ease;
+}
+
+/* Mostrar tick y fondo verde al marcar */
 .checkbox-container input[type="checkbox"]:checked + label::before {
   background-color: var(--saica-green);
   border-color: var(--saica-green);
 }
 
-/* Tick del checkbox centrado */
-.checkbox-container label::after {
-  content: "";
-  width: 6px;
-  height: 12px;
-  border: solid white;
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg) scale(0);
-  transition: transform 0.2s ease;
-  display: block;
-}
-
-/* Mostrar tick animado */
 .checkbox-container input[type="checkbox"]:checked + label::after {
-  transform: rotate(45deg) scale(1);
+  transform: translateY(-50%) rotate(45deg) scale(1);
 }
 
 /* Animación de “pop” al marcar/desmarcar */
