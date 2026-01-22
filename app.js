@@ -224,7 +224,7 @@ form.addEventListener("submit", e => {
 
 // ===== FUNCIÓN ENVIAR EMAIL =====
 function enviarEmailJS(data) {
-  emailjs.send('TU_SERVICE_ID', 'TU_TEMPLATE_ID', data)
+  emailjs.send('service_jx37wls', 'template_6cynxub', data)
     .then(() => {
       alert("Formulario enviado correctamente. ¡Gracias!");
       form.reset();
@@ -235,4 +235,5 @@ function enviarEmailJS(data) {
       alert("Error enviando el formulario, intenta nuevamente.");
     });
 }
+
 
