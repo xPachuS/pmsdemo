@@ -28,6 +28,9 @@ const propuesta = document.getElementById("propuesta");
 
 let SAICA_DATA = {};
 
+// ===== REGEX EMAIL =====
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
 // ===== FORZAR MAYÚSCULAS =====
 [nombreSaica, nombreExterno, otrosLugar].forEach(input => {
   if (!input) return;
@@ -112,7 +115,7 @@ anonimo.addEventListener("change", () => {
 
 // ===== FUNCIÓN BLOQUEO =====
 function bloquearDatosIniciales() {
-  const elementos = [
+  [
     tipoPersona,
     empresaSelect,
     paisSelect,
@@ -121,11 +124,7 @@ function bloquearDatosIniciales() {
     nombreExterno,
     emailExterno,
     anonimo
-  ];
-
-  elementos.forEach(el => {
-    if (el) el.disabled = true;
-  });
+  ].forEach(el => el && (el.disabled = true));
 }
 
 // ===== CONTINUAR =====
@@ -143,8 +142,8 @@ btnContinuar.addEventListener("click", () => {
   }
 
   if (tipoPersona.value === "externo") {
-    if (!emailExterno.value) {
-      alert("Introduce un correo electrónico para poder agradecer tu participación");
+    if (!emailRegex.test(emailExterno.value.trim())) {
+      alert("Introduce un correo electrónico válido (ejemplo: nombre@empresa.com)");
       return;
     }
 
@@ -178,9 +177,5 @@ lugarMejora.addEventListener("change", () => {
 
 // ===== OTROS =====
 otrosLugar.addEventListener("input", () => {
-  if (otrosLugar.value.trim()) {
-    propuestaBlock.classList.remove("hidden");
-  } else {
-    propuestaBlock.classList.add("hidden");
-  }
+  propuestaBlock.classList.toggle("hidden", !otrosLugar.value.trim());
 });
