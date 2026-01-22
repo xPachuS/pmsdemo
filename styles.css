@@ -83,6 +83,12 @@ button:hover {
   display: none;
 }
 
+/* Nombre y Apellidos siempre en mayúsculas */
+#nombreSaica,
+#nombreExterno {
+  text-transform: uppercase;
+}
+
 /* Checkbox simple alineado a la izquierda con label */
 .checkbox-container {
   display: flex;
@@ -104,3 +110,4 @@ button:hover {
   font-size: 16px;
   margin: 0; /* evita margen extra */
 }
+
