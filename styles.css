@@ -83,99 +83,23 @@ button:hover {
   display: none;
 }
 
-/* Checkbox animado y centrado */
+/* Checkbox simple centrado */
 .checkbox-container {
   display: flex;
-  justify-content: center; /* Centrar horizontal */
+  justify-content: center; /* centrar horizontal */
+  align-items: center;
   margin: 1em 0;
-  cursor: pointer;
-  user-select: none;
-  transition: transform 0.2s ease;
+  gap: 10px;
 }
 
 .checkbox-container input[type="checkbox"] {
-  display: none; /* Ocultar checkbox nativo */
+  width: 18px;
+  height: 18px;
+  accent-color: var(--saica-green); /* cambia el color del tick en navegadores modernos */
+  cursor: pointer;
 }
 
 .checkbox-container label {
-  position: relative;
-  padding-left: 30px; /* espacio para el cuadro */
+  cursor: pointer;
   font-size: 16px;
-  color: var(--text);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
 }
-
-/* Cuadro del checkbox */
-.checkbox-container label::before {
-  content: "";
-  width: 20px;
-  height: 20px;
-  border: 2px solid var(--saica-green);
-  border-radius: 4px;
-  background-color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
-  box-sizing: border-box;
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-/* Tick del checkbox centrado */
-.checkbox-container label::after {
-  content: "";
-  width: 6px;
-  height: 12px;
-  border: solid white;
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg) scale(0);
-  transition: transform 0.2s ease;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform-origin: center;
-}
-
-/* Fondo verde y mostrar tick al marcar */
-.checkbox-container input[type="checkbox"]:checked + label::before {
-  background-color: var(--saica-green);
-  border-color: var(--saica-green);
-}
-
-.checkbox-container input[type="checkbox"]:checked + label::after {
-  transform: translate(-50%, -50%) rotate(45deg) scale(1);
-}
-
-/* Animación de “pop” al marcar/desmarcar */
-.checkbox-container input[type="checkbox"]:checked + label,
-.checkbox-container input[type="checkbox"]:not(:checked) + label {
-  transform: scale(1.05);
-}
-
-button {
-  width: 100%;
-  margin-top: 32px;
-  padding: 13px;
-  background: var(--saica-green);
-  color: #fff;
-  border: none;
-  border-radius: 10px;
-  font-size: 1.05rem;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-button:hover {
-  background: var(--saica-green-dark);
-}
-
-.hidden {
-  display: none;
-}
-
-
