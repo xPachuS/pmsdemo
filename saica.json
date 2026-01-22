@@ -22,18 +22,23 @@
   "pack": {
     "nombre": "Saica Pack",
     "centros": [
-      "Saica Pack Madrid",
-      "Saica Pack Zaragoza"
+      "Saica Pack - Alcobendas",
+      "Saica Pack - Meco",
+      "Saica Pack - Velilla de San Antonio",
+      "Saica Pack - El Prat de Llobregat",
+      "Saica Pack - Barcelona",
+      "Saica Pack - Amposta / L’Aldea"
     ]
   },
   "paper": {
     "nombre": "Saica Paper",
     "centros": [
-      "Saica Paper El Burgo",
-      "Saica Paper Zaragoza"
+      "Saica Paper - El Burgo de Ebro",
+      "Saica Paper - Zaragoza"
     ]
   }
 }
+
 
 
 
