@@ -159,7 +159,7 @@ form.addEventListener("submit", e => {
     propuesta: propuesta.value
   };
 
-  emailjs.send('service_o6s3ygm', 'template_6cynxub', templateParams)
+  emailjs.sendForm('service_o6s3ygm', 'template_6cynxub', templateParams)
     .then(() => {
       alert("Formulario enviado correctamente. ¡Gracias!");
       form.reset();
@@ -170,3 +170,4 @@ form.addEventListener("submit", e => {
       alert("Error enviando el formulario, intenta nuevamente.");
     });
 });
+
