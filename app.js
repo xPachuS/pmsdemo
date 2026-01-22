@@ -28,6 +28,8 @@ const propuesta = document.getElementById("propuesta");
 const contadorPropuesta = document.getElementById("contadorPropuesta");
 const fotosAdjuntas = document.getElementById("fotosAdjuntas");
 
+const form = document.getElementById("formulario");
+
 let SAICA_DATA = {};
 
 // ===== REGEX EMAIL =====
@@ -130,28 +132,20 @@ function bloquearDatosIniciales() {
 
 // ===== CONTINUAR =====
 btnContinuar.addEventListener("click", () => {
-  // Validaciones generales
-  if (!tipoPersona.value) {
-    alert("Selecciona el tipo de persona");
-    return;
-  }
+  if (!tipoPersona.value) { alert("Selecciona el tipo de persona"); return; }
 
   if (tipoPersona.value === "saica") {
     if (!empresaSelect.value || !paisSelect.value || !centroSelect.value || !nombreSaica.value) {
-      alert("Completa todos los campos de Saica");
-      return;
+      alert("Completa todos los campos de Saica"); return;
     }
   }
 
   if (tipoPersona.value === "externo") {
     if (!emailRegex.test(emailExterno.value.trim())) {
-      alert("Introduce un correo electrónico válido (ej: nombre@empresa.com)");
-      return;
+      alert("Introduce un correo electrónico válido"); return;
     }
-
     if (!anonimo.checked && !nombreExterno.value) {
-      alert("Introduce tu nombre o marca anónimo");
-      return;
+      alert("Introduce tu nombre o marca anónimo"); return;
     }
   }
 
@@ -190,30 +184,55 @@ propuesta.addEventListener("input", () => {
 
 // ===== SUBIR FOTOS =====
 const labelFotos = document.querySelector('label[for="fotosAdjuntas"]');
-labelFotos && labelFotos.addEventListener("click", () => {
-  fotosAdjuntas.click();
-});
+labelFotos && labelFotos.addEventListener("click", () => fotosAdjuntas.click());
 
-// ===== VALIDACIÓN FINAL DEL FORM =====
+// ===== ENVÍO CON EMAILJS =====
+// Asegúrate de incluir el script de EmailJS y hacer emailjs.init('TU_USER_ID');
 form.addEventListener("submit", e => {
   e.preventDefault();
 
-  // Validación propuesta
-  if (!propuesta.value.trim()) {
-    alert("Debes describir la propuesta de mejora antes de continuar");
-    propuesta.focus();
-    return;
-  }
+  // Validaciones
+  if (!propuesta.value.trim()) { alert("Debes describir la propuesta"); propuesta.focus(); return; }
+  if (tipoPersona.value === "externo" && !emailRegex.test(emailExterno.value.trim())) { alert("Introduce un correo válido"); emailExterno.focus(); return; }
 
-  // Validación email externo
-  if (tipoPersona.value === "externo" && !emailRegex.test(emailExterno.value.trim())) {
-    alert("Introduce un correo electrónico válido (ej: nombre@empresa.com)");
-    emailExterno.focus();
-    return;
-  }
+  // Construir datos
+  const data = {
+    tipoPersona: tipoPersona.value,
+    nombre: tipoPersona.value === 'saica' ? nombreSaica.value : (anonimo.checked ? "Anónimo" : nombreExterno.value),
+    correo: emailExterno.value,
+    empresa: empresaSelect.value,
+    pais: paisSelect.value,
+    centro: centroSelect.value,
+    lugarMejora: lugarMejora.value,
+    otrosLugar: otrosLugar.value,
+    propuesta: propuesta.value
+  };
 
-  // Aquí se puede integrar envío real vía EmailJS o backend
-  alert("Formulario enviado correctamente. ¡Gracias por participar!");
-  form.reset();
-  location.reload();
+  // Adjuntar fotos si existen
+  const file = fotosAdjuntas.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+      data.attachment = evt.target.result;
+      enviarEmailJS(data);
+    };
+    reader.readAsDataURL(file);
+  } else {
+    enviarEmailJS(data);
+  }
 });
+
+// ===== FUNCIÓN ENVIAR EMAIL =====
+function enviarEmailJS(data) {
+  emailjs.send('TU_SERVICE_ID', 'TU_TEMPLATE_ID', data)
+    .then(() => {
+      alert("Formulario enviado correctamente. ¡Gracias!");
+      form.reset();
+      location.reload();
+    })
+    .catch(err => {
+      console.error(err);
+      alert("Error enviando el formulario, intenta nuevamente.");
+    });
+}
+
