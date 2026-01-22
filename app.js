@@ -105,7 +105,7 @@ propuesta.addEventListener("input",()=>contadorPropuesta.textContent=`${propuest
 document.querySelector('label[for="fotosAdjuntas"]').addEventListener("click",()=>fotosAdjuntas.click());
 
 // ===== ENVÍO EMAILJS =====
-emailjs.init('TU_USER_ID_AQUI'); // Reemplaza con tu User ID
+emailjs.init('paou8pXUBiwdx5WuH'); // Reemplaza con tu User ID
 
 form.addEventListener("submit", e => {
   e.preventDefault();
@@ -130,3 +130,4 @@ form.addEventListener("submit", e => {
     .then(()=>{alert("Formulario enviado correctamente. ¡Gracias!"); form.reset(); location.reload();})
     .catch(err=>{console.error(err); alert("Error enviando el formulario, intenta nuevamente.");});
 });
+
