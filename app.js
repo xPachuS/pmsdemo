@@ -68,7 +68,10 @@ empresaSelect.addEventListener("change", () => {
   const empresa = SAICA_DATA[empresaSelect.value];
   if (!empresa) return;
 
-  Object.keys(empresa.paises).sort((a,b) => a.localeCompare(b,"es")).forEach(pais => paisSelect.add(new Option(pais,pais)));
+  Object.keys(empresa.paises)
+    .sort((a,b) => a.localeCompare(b,"es"))
+    .forEach(pais => paisSelect.add(new Option(pais,pais)));
+
   paisBlock.classList.remove("hidden");
 });
 
@@ -81,7 +84,10 @@ paisSelect.addEventListener("change", () => {
   const pais = paisSelect.value;
   if (!empresa || !pais) return;
 
-  empresa.paises[pais].sort((a,b)=>a.localeCompare(b,"es")).forEach(centro => centroSelect.add(new Option(centro, centro)));
+  empresa.paises[pais]
+    .sort((a,b)=>a.localeCompare(b,"es"))
+    .forEach(centro => centroSelect.add(new Option(centro, centro)));
+
   centroBlock.classList.remove("hidden");
 });
 
@@ -107,7 +113,8 @@ btnContinuar.addEventListener("click", () => {
 
   mejoraBlock.classList.remove("hidden");
   btnContinuar.disabled = true;
-  [tipoPersona, empresaSelect, paisSelect, centroSelect, nombreSaica, nombreExterno, emailExterno, anonimo].forEach(el => el.disabled = true);
+  [tipoPersona, empresaSelect, paisSelect, centroSelect, nombreSaica, nombreExterno, emailExterno, anonimo]
+    .forEach(el => el.disabled = true);
 });
 
 lugarMejora.addEventListener("change", () => {
@@ -129,46 +136,26 @@ otrosLugar.addEventListener("input", () => {
 
 propuesta.addEventListener("input", () => contadorPropuesta.textContent = `${propuesta.value.length} / 500`);
 
-document.querySelector('.btnAdjuntar').addEventListener("click", () => fotosAdjuntas.click());
+document.querySelector('label[for="fotosAdjuntas"]').addEventListener("click", () => fotosAdjuntas.click());
 
-// ===== ENVÍO EMAILJS =====
+// ===== ENVÍO EMAILJS CON sendForm =====
 form.addEventListener("submit", e => {
   e.preventDefault();
+
   if (!propuesta.value.trim()) { alert("Debes describir la propuesta"); propuesta.focus(); return; }
   if (tipoPersona.value === "externo" && !emailRegex.test(emailExterno.value.trim())) { alert("Introduce un correo válido"); emailExterno.focus(); return; }
 
-  const data = {
-    tipoPersona: tipoPersona.value,
-    nombre: tipoPersona.value==='saica'?nombreSaica.value:(anonimo.checked?"Anónimo":nombreExterno.value),
-    correo: emailExterno.value,
-    empresa: empresaSelect.value,
-    pais: paisSelect.value,
-    centro: centroSelect.value,
-    lugarMejora: lugarMejora.value,
-    otrosLugar: otrosLugar.value,
-    propuesta: propuesta.value
-  };
+  // Inicializa EmailJS (solo una vez al cargar la página)
+  emailjs.init('TU_USER_ID'); // Reemplaza con tu User ID de EmailJS
 
-  // Adjuntos
-  if (fotosAdjuntas.files.length > 0) {
-    const attachments = [];
-    let loaded = 0;
-    Array.from(fotosAdjuntas.files).forEach(file => {
-      const reader = new FileReader();
-      reader.onload = evt => {
-        attachments.push({ name: file.name, data: evt.target.result });
-        loaded++;
-        if (loaded === fotosAdjuntas.files.length) enviarEmailJS(data, attachments);
-      };
-      reader.readAsDataURL(file);
+  emailjs.sendForm('service_o6s3ygm','template_6cynxub', form)
+    .then(() => {
+      alert("Formulario enviado correctamente. ¡Gracias!");
+      form.reset();
+      location.reload();
+    })
+    .catch(err => {
+      console.error(err);
+      alert("Error enviando el formulario, intenta nuevamente.");
     });
-  } else {
-    enviarEmailJS(data, []);
-  }
 });
-
-function enviarEmailJS(data, attachments) {
-  emailjs.send('service_o6s3ygm','template_6cynxub',{ ...data, attachments })
-    .then(() => { alert("Formulario enviado correctamente. ¡Gracias!"); form.reset(); location.reload(); })
-    .catch(err => { console.error(err); alert("Error enviando el formulario, intenta nuevamente."); });
-}
