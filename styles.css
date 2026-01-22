@@ -73,6 +73,7 @@ button {
   font-size: 1.05rem;
   font-weight: 600;
   cursor: pointer;
+  transition: background 0.2s;
 }
 
 button:hover {
@@ -83,6 +84,7 @@ button:hover {
   display: none;
 }
 
+/* Textarea propuesta */
 #propuesta {
   width: 100%;
   box-sizing: border-box;
@@ -92,6 +94,7 @@ button:hover {
   font-family: inherit;
   padding: 10px;
   font-size: 1rem;
+  margin-top: 8px;
 }
 
 #contadorPropuesta {
@@ -103,7 +106,8 @@ button:hover {
 
 /* Nombre y Apellidos siempre en mayúsculas */
 #nombreSaica,
-#nombreExterno {
+#nombreExterno,
+#otrosLugar {
   text-transform: uppercase;
 }
 
@@ -129,7 +133,23 @@ button:hover {
   margin: 0; /* evita margen extra */
 }
 
+/* Input de archivos para adjuntar fotos */
+#fotosAdjuntas {
+  display: none;
+}
 
+label[for="fotosAdjuntas"] {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px 15px;
+  background: var(--saica-green);
+  color: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
+}
 
-
-
+label[for="fotosAdjuntas"]:hover {
+  background: var(--saica-green-dark);
+}
