@@ -25,6 +25,7 @@ const form = document.getElementById("formulario");
 
 let SAICA_DATA = {};
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2 MB
 
 // ===== FORZAR MAYÚSCULAS =====
 [nombreSaica, nombreExterno, otrosLugar].forEach(input => {
@@ -98,13 +99,13 @@ btnContinuar.addEventListener("click", () => {
     alert("Completa los campos de Externo correctamente"); return;
   }
 
+  // ✅ Solo bloqueo visual, no deshabilitar
   mejoraBlock.classList.remove("hidden");
   btnContinuar.disabled = true;
-  [tipoPersona, empresaSelect, paisSelect, centroSelect, nombreSaica, nombreExterno, emailExterno, anonimo]
-    .forEach(el => {
-      el.style.pointerEvents = "none";
-      el.style.opacity = "0.6";
-    });
+  [tipoPersona, empresaSelect, paisSelect, centroSelect, nombreSaica, nombreExterno, emailExterno, anonimo].forEach(el => {
+    el.style.pointerEvents = "none";
+    el.style.opacity = "0.6";
+  });
 });
 
 lugarMejora.addEventListener("change", () => {
@@ -132,55 +133,28 @@ document.querySelector('label[for="fotosAdjuntas"]').addEventListener("click", (
 // ===== INICIALIZAR EMAILJS =====
 emailjs.init('paou8pXUBiwdx5WuH');
 
-// ===== ENVÍO FORMULARIO con attachments =====
-form.addEventListener("submit", async e => {
+// ===== ENVÍO FORMULARIO con /send-form =====
+form.addEventListener("submit", e => {
   e.preventDefault();
 
   if (!propuesta.value.trim()) { alert("Debes describir la propuesta"); propuesta.focus(); return; }
   if (tipoPersona.value === "externo" && !emailRegex.test(emailExterno.value.trim())) { alert("Introduce un correo válido"); emailExterno.focus(); return; }
 
-  // Construir objeto de datos
-  const templateParams = {
-    to_email: "peimadin@gmail.com",
-    tipoPersona: tipoPersona.value,
-    nombre: tipoPersona.value === "saica" ? nombreSaica.value : (anonimo.checked ? "Anónimo" : nombreExterno.value),
-    correo: emailExterno.value,
-    empresa: empresaSelect.value,
-    pais: paisSelect.value,
-    centro: centroSelect.value,
-    lugarMejora: lugarMejora.value,
-    otrosLugar: otrosLugar.value,
-    propuesta: propuesta.value
-  };
-
-  // Adjuntar imágenes <= 2MB
-  const attachments = [];
+  // Validar archivos (solo imágenes <= 2 MB)
   for (let file of fotosAdjuntas.files) {
-    if (file.size > 2 * 1024 * 1024) { // 2MB
-      alert(`El archivo ${file.name} excede 2 MB`);
-      return;
-    }
-    attachments.push({
-      name: file.name,
-      data: await new Promise(resolve => {
-        const reader = new FileReader();
-        reader.onload = e => resolve(e.target.result);
-        reader.readAsDataURL(file);
-      })
-    });
+    if (!file.type.startsWith("image/")) { alert(`Archivo ${file.name} no es una imagen.`); return; }
+    if (file.size > MAX_FILE_SIZE) { alert(`Archivo ${file.name} supera 2 MB.`); return; }
   }
 
-  if (attachments.length) templateParams.attachments = attachments;
-
-  // Enviar con emailjs.send()
-  emailjs.send('service_o6s3ygm', 'template_6cynxub', templateParams)
+  // Enviar el form completo directamente
+  emailjs.sendForm('service_o6s3ygm', 'template_6cynxub', form)
     .then(() => {
       alert("Formulario enviado correctamente. ¡Gracias!");
       form.reset();
       location.reload();
     })
     .catch(err => {
-      console.error("Error EmailJS:", err);
+      console.error("Error enviando el formulario:", err);
       alert("Error enviando el formulario, intenta nuevamente.");
     });
 });
