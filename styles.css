@@ -83,23 +83,24 @@ button:hover {
   display: none;
 }
 
-/* Checkbox simple centrado */
+/* Checkbox simple centrado con label */
 .checkbox-container {
   display: flex;
-  justify-content: center; /* centrar horizontal */
+  justify-content: center; /* Centrar todo horizontalmente */
   align-items: center;
   margin: 1em 0;
-  gap: 10px;
+  gap: 10px; /* espacio entre checkbox y texto */
 }
 
 .checkbox-container input[type="checkbox"] {
   width: 18px;
   height: 18px;
-  accent-color: var(--saica-green); /* cambia el color del tick en navegadores modernos */
+  accent-color: var(--saica-green); /* color del tick */
   cursor: pointer;
 }
 
 .checkbox-container label {
   cursor: pointer;
   font-size: 16px;
+  margin: 0; /* evitar margen extra */
 }
