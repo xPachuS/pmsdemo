@@ -2,17 +2,23 @@
 const tipoPersona = document.getElementById("tipoPersona");
 const saicaBlock = document.getElementById("saicaBlock");
 const externoBlock = document.getElementById("externoBlock");
+
 const empresaSelect = document.getElementById("empresaSelect");
 const paisBlock = document.getElementById("paisBlock");
 const paisSelect = document.getElementById("paisSelect");
+
 const centroBlock = document.getElementById("centroBlock");
 const centroSelect = document.getElementById("centroSelect");
+
 const nombreSaicaBlock = document.getElementById("nombreSaicaBlock");
 const nombreSaica = document.getElementById("nombreSaica");
+
 const nombreExterno = document.getElementById("nombreExterno");
 const emailExterno = document.getElementById("emailExterno");
 const anonimo = document.getElementById("anonimo");
+
 const btnContinuar = document.getElementById("btnContinuar");
+
 const mejoraBlock = document.getElementById("mejoraBlock");
 const lugarMejora = document.getElementById("lugarMejora");
 const otrosBlock = document.getElementById("otrosBlock");
@@ -21,6 +27,7 @@ const propuestaBlock = document.getElementById("propuestaBlock");
 const propuesta = document.getElementById("propuesta");
 const contadorPropuesta = document.getElementById("contadorPropuesta");
 const fotosAdjuntas = document.getElementById("fotosAdjuntas");
+
 const form = document.getElementById("formulario");
 
 let SAICA_DATA = {};
@@ -57,11 +64,14 @@ empresaSelect.addEventListener("change", () => {
   paisBlock.classList.add("hidden");
   centroBlock.classList.add("hidden");
   nombreSaicaBlock.classList.add("hidden");
+
   const empresa = SAICA_DATA[empresaSelect.value];
   if (!empresa) return;
+
   Object.keys(empresa.paises)
     .sort((a, b) => a.localeCompare(b, "es"))
     .forEach(pais => paisSelect.add(new Option(pais, pais)));
+
   paisBlock.classList.remove("hidden");
 });
 
@@ -69,12 +79,15 @@ paisSelect.addEventListener("change", () => {
   centroSelect.innerHTML = '<option value="">Selecciona un centro</option>';
   centroBlock.classList.add("hidden");
   nombreSaicaBlock.classList.add("hidden");
+
   const empresa = SAICA_DATA[empresaSelect.value];
   const pais = paisSelect.value;
   if (!empresa || !pais) return;
+
   empresa.paises[pais]
     .sort((a, b) => a.localeCompare(b, "es"))
     .forEach(centro => centroSelect.add(new Option(centro, centro)));
+
   centroBlock.classList.remove("hidden");
 });
 
@@ -97,8 +110,10 @@ btnContinuar.addEventListener("click", () => {
   if (tipoPersona.value === "externo" && (!emailRegex.test(emailExterno.value.trim()) || (!anonimo.checked && !nombreExterno.value))) {
     alert("Completa los campos de Externo correctamente"); return;
   }
+
   mejoraBlock.classList.remove("hidden");
   btnContinuar.disabled = true;
+
   [tipoPersona, empresaSelect, paisSelect, centroSelect, nombreSaica, nombreExterno, emailExterno, anonimo]
     .forEach(el => el.disabled = true);
 });
@@ -107,11 +122,13 @@ lugarMejora.addEventListener("change", () => {
   otrosBlock.classList.add("hidden");
   propuestaBlock.classList.add("hidden");
   otrosLugar.required = false;
+
   if (lugarMejora.value === "Otros") {
     otrosBlock.classList.remove("hidden");
     otrosLugar.required = true;
     return;
   }
+
   if (lugarMejora.value) propuestaBlock.classList.remove("hidden");
 });
 
@@ -128,7 +145,7 @@ document.querySelector('label[for="fotosAdjuntas"]').addEventListener("click", (
 // ===== INICIALIZAR EMAILJS =====
 emailjs.init('paou8pXUBiwdx5WuH');
 
-// ===== ENVÍO FORMULARIO con /send-form =====
+// ===== ENVÍO FORMULARIO FINAL (con /send-form) =====
 form.addEventListener("submit", e => {
   e.preventDefault();
 
@@ -143,7 +160,7 @@ form.addEventListener("submit", e => {
     return;
   }
 
-  // /send-form envía directamente el <form>, todos los campos se toman del form
+  // ===== Enviar TODO el form a EmailJS =====
   emailjs.sendForm('service_o6s3ygm', 'template_6cynxub', form)
     .then(() => {
       alert("Formulario enviado correctamente. ¡Gracias!");
@@ -151,8 +168,10 @@ form.addEventListener("submit", e => {
       location.reload();
     })
     .catch(err => {
-      console.error("Error EmailJS:", err);
+      console.error("Error enviando el formulario:", err);
       alert("Error enviando el formulario, intenta nuevamente.");
     });
 });
+
+
 
