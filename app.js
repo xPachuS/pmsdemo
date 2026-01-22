@@ -2,23 +2,17 @@
 const tipoPersona = document.getElementById("tipoPersona");
 const saicaBlock = document.getElementById("saicaBlock");
 const externoBlock = document.getElementById("externoBlock");
-
 const empresaSelect = document.getElementById("empresaSelect");
 const paisBlock = document.getElementById("paisBlock");
 const paisSelect = document.getElementById("paisSelect");
-
 const centroBlock = document.getElementById("centroBlock");
 const centroSelect = document.getElementById("centroSelect");
-
 const nombreSaicaBlock = document.getElementById("nombreSaicaBlock");
 const nombreSaica = document.getElementById("nombreSaica");
-
 const nombreExterno = document.getElementById("nombreExterno");
 const emailExterno = document.getElementById("emailExterno");
 const anonimo = document.getElementById("anonimo");
-
 const btnContinuar = document.getElementById("btnContinuar");
-
 const mejoraBlock = document.getElementById("mejoraBlock");
 const lugarMejora = document.getElementById("lugarMejora");
 const otrosBlock = document.getElementById("otrosBlock");
@@ -27,11 +21,11 @@ const propuestaBlock = document.getElementById("propuestaBlock");
 const propuesta = document.getElementById("propuesta");
 const contadorPropuesta = document.getElementById("contadorPropuesta");
 const fotosAdjuntas = document.getElementById("fotosAdjuntas");
-
 const form = document.getElementById("formulario");
 
 let SAICA_DATA = {};
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2 MB
 
 // ===== FORZAR MAYÚSCULAS =====
 [nombreSaica, nombreExterno, otrosLugar].forEach(input => {
@@ -64,14 +58,11 @@ empresaSelect.addEventListener("change", () => {
   paisBlock.classList.add("hidden");
   centroBlock.classList.add("hidden");
   nombreSaicaBlock.classList.add("hidden");
-
   const empresa = SAICA_DATA[empresaSelect.value];
   if (!empresa) return;
-
   Object.keys(empresa.paises)
     .sort((a, b) => a.localeCompare(b, "es"))
     .forEach(pais => paisSelect.add(new Option(pais, pais)));
-
   paisBlock.classList.remove("hidden");
 });
 
@@ -79,15 +70,12 @@ paisSelect.addEventListener("change", () => {
   centroSelect.innerHTML = '<option value="">Selecciona un centro</option>';
   centroBlock.classList.add("hidden");
   nombreSaicaBlock.classList.add("hidden");
-
   const empresa = SAICA_DATA[empresaSelect.value];
   const pais = paisSelect.value;
   if (!empresa || !pais) return;
-
   empresa.paises[pais]
     .sort((a, b) => a.localeCompare(b, "es"))
     .forEach(centro => centroSelect.add(new Option(centro, centro)));
-
   centroBlock.classList.remove("hidden");
 });
 
@@ -111,10 +99,9 @@ btnContinuar.addEventListener("click", () => {
     alert("Completa los campos de Externo correctamente"); return;
   }
 
-  // ✅ Solo bloqueamos visualmente, NO deshabilitar
+  // ✅ Solo bloqueo visual, no deshabilitar
   mejoraBlock.classList.remove("hidden");
   btnContinuar.disabled = true;
-
   [tipoPersona, empresaSelect, paisSelect, centroSelect, nombreSaica, nombreExterno, emailExterno, anonimo].forEach(el => {
     el.style.pointerEvents = "none";
     el.style.opacity = "0.6";
@@ -125,13 +112,11 @@ lugarMejora.addEventListener("change", () => {
   otrosBlock.classList.add("hidden");
   propuestaBlock.classList.add("hidden");
   otrosLugar.required = false;
-
   if (lugarMejora.value === "Otros") {
     otrosBlock.classList.remove("hidden");
     otrosLugar.required = true;
     return;
   }
-
   if (lugarMejora.value) propuestaBlock.classList.remove("hidden");
 });
 
@@ -148,23 +133,20 @@ document.querySelector('label[for="fotosAdjuntas"]').addEventListener("click", (
 // ===== INICIALIZAR EMAILJS =====
 emailjs.init('paou8pXUBiwdx5WuH');
 
-// ===== ENVÍO FORMULARIO FINAL con /send-form =====
+// ===== ENVÍO FORMULARIO con /send-form =====
 form.addEventListener("submit", e => {
   e.preventDefault();
 
-  if (!propuesta.value.trim()) {
-    alert("Debes describir la propuesta");
-    propuesta.focus();
-    return;
+  if (!propuesta.value.trim()) { alert("Debes describir la propuesta"); propuesta.focus(); return; }
+  if (tipoPersona.value === "externo" && !emailRegex.test(emailExterno.value.trim())) { alert("Introduce un correo válido"); emailExterno.focus(); return; }
+
+  // Validar archivos (solo imágenes <= 2 MB)
+  for (let file of fotosAdjuntas.files) {
+    if (!file.type.startsWith("image/")) { alert(`Archivo ${file.name} no es una imagen.`); return; }
+    if (file.size > MAX_FILE_SIZE) { alert(`Archivo ${file.name} supera 2 MB.`); return; }
   }
 
-  if (tipoPersona.value === "externo" && !emailRegex.test(emailExterno.value.trim())) {
-    alert("Introduce un correo válido");
-    emailExterno.focus();
-    return;
-  }
-
-  // ✅ Enviar TODO el form, todos los campos visibles serán leídos
+  // Enviar el form completo directamente
   emailjs.sendForm('service_o6s3ygm', 'template_6cynxub', form)
     .then(() => {
       alert("Formulario enviado correctamente. ¡Gracias!");
