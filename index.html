@@ -5,6 +5,7 @@
   <title>Formulario Saica</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="styles.css">
+  <!-- EmailJS SDK -->
   <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
 </head>
 <body>
@@ -25,7 +26,6 @@
 
     <!-- SAICA -->
     <div id="saicaBlock" class="hidden">
-
       <label>Empresa</label>
       <select id="empresaSelect" name="empresa">
         <option value="">Selecciona</option>
@@ -49,12 +49,10 @@
         <label>Nombre y apellidos</label>
         <input type="text" id="nombreSaica" name="nombre" style="text-transform: uppercase">
       </div>
-
     </div>
 
     <!-- EXTERNO -->
     <div id="externoBlock" class="hidden">
-
       <label>Nombre y apellidos</label>
       <input type="text" id="nombreExterno" name="nombre" style="text-transform: uppercase">
 
@@ -65,7 +63,6 @@
 
       <label>Correo electrónico</label>
       <input type="email" id="emailExterno" name="correo" placeholder="nombre@ejemplo.com" required>
-
     </div>
 
     <!-- BOTÓN CONTINUAR -->
@@ -73,7 +70,6 @@
 
     <!-- BLOQUE MEJORA -->
     <div id="mejoraBlock" class="hidden">
-
       <label>¿Dónde detectaste la mejora?</label>
       <select id="lugarMejora" name="lugarMejora">
         <option value="">Selecciona una opción</option>
@@ -102,7 +98,6 @@
         <!-- Botón final enviar -->
         <button type="submit" id="btnEnviar">Enviar</button>
       </div>
-
     </div>
 
   </form>
@@ -111,7 +106,3 @@
 <script src="app.js"></script>
 </body>
 </html>
-
-
-
-
