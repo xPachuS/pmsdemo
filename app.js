@@ -111,11 +111,14 @@ btnContinuar.addEventListener("click", () => {
     alert("Completa los campos de Externo correctamente"); return;
   }
 
+  // ✅ Solo bloqueamos visualmente, NO deshabilitar
   mejoraBlock.classList.remove("hidden");
   btnContinuar.disabled = true;
 
-  [tipoPersona, empresaSelect, paisSelect, centroSelect, nombreSaica, nombreExterno, emailExterno, anonimo]
-    .forEach(el => el.disabled = true);
+  [tipoPersona, empresaSelect, paisSelect, centroSelect, nombreSaica, nombreExterno, emailExterno, anonimo].forEach(el => {
+    el.style.pointerEvents = "none";
+    el.style.opacity = "0.6";
+  });
 });
 
 lugarMejora.addEventListener("change", () => {
@@ -142,35 +145,26 @@ propuesta.addEventListener("input", () => {
 
 document.querySelector('label[for="fotosAdjuntas"]').addEventListener("click", () => fotosAdjuntas.click());
 
+// ===== INICIALIZAR EMAILJS =====
 emailjs.init('paou8pXUBiwdx5WuH');
 
+// ===== ENVÍO FORMULARIO FINAL con /send-form =====
 form.addEventListener("submit", e => {
   e.preventDefault();
-
-  const templateParams = {
-    tipoPersona: tipoPersona.value,
-    nombre: tipoPersona.value === "saica" ? nombreSaica.value : (anonimo.checked ? "Anónimo" : nombreExterno.value),
-    correo: emailExterno.value,
-    empresa: empresaSelect.value,
-    pais: paisSelect.value,
-    centro: centroSelect.value,
-    lugarMejora: lugarMejora.value,
-    otrosLugar: otrosLugar.value,
-    propuesta: propuesta.value
-  };
 
   if (!propuesta.value.trim()) {
     alert("Debes describir la propuesta");
     propuesta.focus();
     return;
   }
+
   if (tipoPersona.value === "externo" && !emailRegex.test(emailExterno.value.trim())) {
     alert("Introduce un correo válido");
     emailExterno.focus();
     return;
   }
 
-  // ===== Enviar TODO el form a EmailJS =====
+  // ✅ Enviar TODO el form, todos los campos visibles serán leídos
   emailjs.sendForm('service_o6s3ygm', 'template_6cynxub', form)
     .then(() => {
       alert("Formulario enviado correctamente. ¡Gracias!");
