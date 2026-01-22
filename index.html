@@ -14,7 +14,7 @@
 
   <form id="formulario">
 
-    <!-- Tipo de persona -->
+    <!-- TIPO DE PERSONA -->
     <label>¿Eres empleado de Saica o externo?</label>
     <select id="tipoPersona" required>
       <option value="">Selecciona</option>
@@ -46,11 +46,7 @@
 
       <div id="nombreSaicaBlock" class="hidden">
         <label>Nombre y apellidos</label>
-        <input
-          type="text"
-          id="nombreSaica"
-          style="text-transform: uppercase"
-        >
+        <input type="text" id="nombreSaica" style="text-transform: uppercase">
       </div>
 
     </div>
@@ -59,11 +55,7 @@
     <div id="externoBlock" class="hidden">
 
       <label>Nombre y apellidos</label>
-      <input
-        type="text"
-        id="nombreExterno"
-        style="text-transform: uppercase"
-      >
+      <input type="text" id="nombreExterno" style="text-transform: uppercase">
 
       <div class="checkbox-container">
         <input type="checkbox" id="anonimo">
@@ -71,15 +63,11 @@
       </div>
 
       <label>Correo electrónico</label>
-      <input
-        type="email"
-        id="emailExterno"
-        placeholder="nombre@ejemplo.com"
-      >
+      <input type="email" id="emailExterno" placeholder="nombre@ejemplo.com" required>
 
     </div>
 
-    <!-- CONTINUAR -->
+    <!-- BOTÓN CONTINUAR -->
     <button type="button" id="btnContinuar">Continuar</button>
 
     <!-- BLOQUE MEJORA -->
@@ -98,25 +86,22 @@
 
       <div id="otrosBlock" class="hidden">
         <label>Indica dónde</label>
-        <input
-          type="text"
-          id="otrosLugar"
-          style="text-transform: uppercase"
-        >
+        <input type="text" id="otrosLugar" style="text-transform: uppercase">
       </div>
-
-      <br>
 
       <div id="propuestaBlock" class="hidden">
         <label>Describe la propuesta de mejora de seguridad</label>
-        <br>
-        <textarea
-          id="propuesta"
-          rows="6"
-          placeholder="Describe aquí tu propuesta..."
-          maxlength="500"
-        ></textarea>
-      <div id="contadorPropuesta">0 / 500</div>
+        <textarea id="propuesta" rows="6" placeholder="Describe aquí tu propuesta..." maxlength="500" style="width: 100%;"></textarea>
+        <div id="contadorPropuesta">0 / 500</div>
+
+        <!-- Adjuntar fotos -->
+        <div style="margin-top: 10px;">
+          <label for="fotosAdjuntas" style="cursor: pointer; color: var(--saica-green); font-weight: 600;">📎 Adjuntar fotos</label>
+          <input type="file" id="fotosAdjuntas" accept="image/*" multiple style="display: none;">
+        </div>
+
+        <!-- Botón final enviar -->
+        <button type="submit" id="btnEnviar" style="margin-top: 20px;">Enviar</button>
       </div>
 
     </div>
@@ -127,6 +112,3 @@
 <script src="app.js"></script>
 </body>
 </html>
-
-
-
