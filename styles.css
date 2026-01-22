@@ -6,9 +6,7 @@
   --text: #2c2c2c;
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
@@ -31,23 +29,11 @@ body {
   border-top: 6px solid var(--saica-green);
 }
 
-h2 {
-  margin-top: 0;
-  color: var(--saica-green);
-}
+h2 { margin-top: 0; color: var(--saica-green); }
+.subtitle { color: #555; margin-bottom: 25px; }
 
-.subtitle {
-  color: #555;
-  margin-bottom: 25px;
-}
-
-label {
-  font-weight: 600;
-  margin-top: 22px;
-  display: block;
-}
-
-input, select {
+label { font-weight: 600; margin-top: 22px; display: block; }
+input, select, textarea {
   width: 100%;
   padding: 11px;
   margin-top: 6px;
@@ -56,7 +42,7 @@ input, select {
   font-size: 1rem;
 }
 
-input:focus, select:focus {
+input:focus, select:focus, textarea:focus {
   outline: none;
   border-color: var(--saica-green);
   box-shadow: 0 0 0 3px rgba(46,125,50,.18);
@@ -76,80 +62,39 @@ button {
   transition: background 0.2s;
 }
 
-button:hover {
-  background: var(--saica-green-dark);
-}
+button:hover { background: var(--saica-green-dark); }
 
-.hidden {
-  display: none;
-}
+.hidden { display: none; }
 
 /* Textarea propuesta */
-#propuesta {
-  width: 100%;
-  box-sizing: border-box;
-  resize: none;         /* No se puede redimensionar */
-  min-height: 300px;
-  max-height: 300px;
-  font-family: inherit;
-  padding: 10px;
-  font-size: 1rem;
-  margin-top: 8px;
-}
+#propuesta { resize: none; min-height: 150px; max-height: 300px; }
 
-#contadorPropuesta {
-  font-size: 0.9rem;
-  color: #555;
-  text-align: right;
-  margin-top: 4px;
-}
+/* Contador */
+#contadorPropuesta { font-size: 0.9rem; color: #555; text-align: right; margin-top: 4px; }
 
-/* Nombre y Apellidos siempre en mayúsculas */
-#nombreSaica,
-#nombreExterno,
-#otrosLugar {
-  text-transform: uppercase;
-}
+/* Mayúsculas */
+#nombreSaica, #nombreExterno, #otrosLugar { text-transform: uppercase; }
 
-/* Checkbox simple alineado a la izquierda con label */
-.checkbox-container {
-  display: flex;
-  justify-content: flex-start; /* alineado a la izquierda */
-  align-items: center;
-  margin: 1em 0;
-  gap: 10px; /* espacio entre checkbox y texto */
-}
+/* Checkbox */
+.checkbox-container { display: flex; align-items: center; gap: 10px; margin: 1em 0; }
+.checkbox-container input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--saica-green); cursor: pointer; }
+.checkbox-container label { cursor: pointer; margin: 0; }
 
-.checkbox-container input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
-  accent-color: var(--saica-green); /* color del tick */
-  cursor: pointer;
-}
-
-.checkbox-container label {
-  cursor: pointer;
-  font-size: 16px;
-  margin: 0; /* evita margen extra */
-}
-
-/* Input de archivos para adjuntar fotos */
-#fotosAdjuntas {
-  display: none;
-}
-
-label[for="fotosAdjuntas"] {
+/* Botón adjuntar fotos */
+.btnAdjuntar {
   display: inline-block;
   margin-top: 10px;
   padding: 10px 15px;
-  background: var(--saica-green);
-  color: #fff;
+  background: #fff;
+  color: var(--saica-green);
+  border: 2px solid var(--saica-green);
   border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
-  transition: background 0.2s;
+  transition: background 0.2s, color 0.2s;
 }
 
-label[for="fotosAdjuntas"]:hover {
-  background: var(--saica-green-dark);
+.btnAdjuntar:hover {
+  background: var(--saica-green);
+  color: #fff;
 }
