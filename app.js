@@ -187,7 +187,7 @@ const labelFotos = document.querySelector('label[for="fotosAdjuntas"]');
 labelFotos && labelFotos.addEventListener("click", () => fotosAdjuntas.click());
 
 // ===== ENVÍO CON EMAILJS =====
-// Asegúrate de incluir el script de EmailJS y hacer emailjs.init('TU_USER_ID');
+// Asegúrate de incluir el script de EmailJS y hacer emailjs.init('sWWKZZVhXL3sE1bp6');
 form.addEventListener("submit", e => {
   e.preventDefault();
 
@@ -235,5 +235,6 @@ function enviarEmailJS(data) {
       alert("Error enviando el formulario, intenta nuevamente.");
     });
 }
+
 
 
