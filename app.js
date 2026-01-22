@@ -15,7 +15,7 @@ const anonimo = document.getElementById("anonimo");
 let SAICA_DATA = {};
 
 // Cargar JSON
-fetch("data/saica.json")
+fetch("saica.json")
   .then(response => response.json())
   .then(data => {
     SAICA_DATA = data;
@@ -59,3 +59,4 @@ anonimo.addEventListener("change", () => {
   nombreExterno.required = !anonimo.checked;
   if (anonimo.checked) nombreExterno.value = "";
 });
+
