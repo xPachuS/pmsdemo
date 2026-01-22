@@ -72,15 +72,15 @@ input:focus, select:focus {
 /* Checkbox animado y centrado */
 .checkbox-container {
   display: flex;
-  justify-content: center; /* centrar horizontal */
+  justify-content: center; /* Centrar horizontal */
   margin: 1em 0;
   cursor: pointer;
   user-select: none;
-  transition: transform 0.2s ease; /* animación al click */
+  transition: transform 0.2s ease;
 }
 
 .checkbox-container input[type="checkbox"] {
-  display: none; /* ocultar checkbox nativo */
+  display: none; /* Ocultar checkbox nativo */
 }
 
 /* Label con espacio para cuadro */
@@ -90,6 +90,8 @@ input:focus, select:focus {
   font-size: 16px;
   color: var(--text);
   cursor: pointer;
+  display: flex;
+  align-items: center;
 }
 
 /* Cuadro del checkbox */
@@ -105,31 +107,33 @@ input:focus, select:focus {
   border-radius: 4px;
   background-color: #fff;
   transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   box-sizing: border-box;
 }
 
-/* Tick del checkbox */
+/* Tick del checkbox centrado con flex */
 .checkbox-container label::after {
   content: "";
-  position: absolute;
-  left: 5px;
-  top: 50%;
-  transform: translateY(-50%) rotate(45deg) scale(0);
   width: 6px;
   height: 12px;
   border: solid white;
   border-width: 0 2px 2px 0;
+  transform: rotate(45deg) scale(0);
   transition: transform 0.2s ease;
+  display: block;
 }
 
-/* Mostrar tick y fondo verde al marcar */
+/* Fondo verde cuando está marcado */
 .checkbox-container input[type="checkbox"]:checked + label::before {
   background-color: var(--saica-green);
   border-color: var(--saica-green);
 }
 
+/* Mostrar tick */
 .checkbox-container input[type="checkbox"]:checked + label::after {
-  transform: translateY(-50%) rotate(45deg) scale(1);
+  transform: rotate(45deg) scale(1);
 }
 
 /* Animación de “pop” al marcar/desmarcar */
@@ -158,3 +162,4 @@ button:hover {
 .hidden {
   display: none;
 }
+
