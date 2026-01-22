@@ -142,12 +142,22 @@ propuesta.addEventListener("input", () => {
 
 document.querySelector('label[for="fotosAdjuntas"]').addEventListener("click", () => fotosAdjuntas.click());
 
-// ===== INICIALIZAR EMAILJS =====
 emailjs.init('paou8pXUBiwdx5WuH');
 
-// ===== ENVÍO FORMULARIO FINAL (con /send-form) =====
 form.addEventListener("submit", e => {
   e.preventDefault();
+
+  const templateParams = {
+    tipoPersona: tipoPersona.value,
+    nombre: tipoPersona.value === "saica" ? nombreSaica.value : (anonimo.checked ? "Anónimo" : nombreExterno.value),
+    correo: emailExterno.value,
+    empresa: empresaSelect.value,
+    pais: paisSelect.value,
+    centro: centroSelect.value,
+    lugarMejora: lugarMejora.value,
+    otrosLugar: otrosLugar.value,
+    propuesta: propuesta.value
+  };
 
   if (!propuesta.value.trim()) {
     alert("Debes describir la propuesta");
@@ -172,6 +182,7 @@ form.addEventListener("submit", e => {
       alert("Error enviando el formulario, intenta nuevamente.");
     });
 });
+
 
 
 
