@@ -15,7 +15,7 @@
 
   <form id="formulario">
 
-    <!-- TIPO DE PERSONA -->
+    <!-- Tipo de Persona -->
     <label>¿Eres empleado de Saica o externo?</label>
     <select id="tipoPersona" name="tipoPersona" required>
       <option value="">Selecciona</option>
@@ -23,7 +23,7 @@
       <option value="externo">Externo</option>
     </select>
 
-    <!-- SAICA -->
+    <!-- Bloque Saica -->
     <div id="saicaBlock" class="hidden">
       <label>Empresa</label>
       <select id="empresaSelect" name="empresa">
@@ -46,14 +46,14 @@
 
       <div id="nombreSaicaBlock" class="hidden">
         <label>Nombre y apellidos</label>
-        <input type="text" id="nombreSaica" name="nombre" style="text-transform: uppercase">
+        <input type="text" id="nombreSaica" name="nombreSaica" style="text-transform: uppercase">
       </div>
     </div>
 
-    <!-- EXTERNO -->
+    <!-- Bloque Externo -->
     <div id="externoBlock" class="hidden">
       <label>Nombre y apellidos</label>
-      <input type="text" id="nombreExterno" name="nombre" style="text-transform: uppercase">
+      <input type="text" id="nombreExterno" name="nombreExterno" style="text-transform: uppercase">
 
       <div class="checkbox-container">
         <input type="checkbox" id="anonimo" name="anonimo">
@@ -61,13 +61,13 @@
       </div>
 
       <label>Correo electrónico</label>
-      <input type="email" id="emailExterno" name="correo" placeholder="nombre@ejemplo.com">
+      <input type="email" id="emailExterno" name="correoExterno" placeholder="nombre@ejemplo.com">
     </div>
 
-    <!-- BOTÓN CONTINUAR -->
+    <!-- Botón continuar -->
     <button type="button" id="btnContinuar">Continuar</button>
 
-    <!-- BLOQUE MEJORA -->
+    <!-- Bloque mejora -->
     <div id="mejoraBlock" class="hidden">
       <label>¿Dónde detectaste la mejora?</label>
       <select id="lugarMejora" name="lugarMejora">
@@ -87,14 +87,16 @@
 
       <div id="propuestaBlock" class="hidden">
         <label>Describe la propuesta de mejora de seguridad</label>
-        <textarea id="propuesta" name="propuesta" rows="6" placeholder="Describe aquí tu propuesta..." maxlength="500" style="width:100%;"></textarea>
+        <textarea id="propuesta" name="propuesta" rows="6" maxlength="500" style="width:100%;"></textarea>
         <div id="contadorPropuesta">0 / 500</div>
 
         <label for="fotosAdjuntas" style="cursor:pointer; color: green; font-weight:600;">📎 Adjuntar fotos</label>
         <input type="file" id="fotosAdjuntas" name="fotosAdjuntas" accept="image/*" multiple>
+
+        <!-- Para /send-form no necesitas poner to_email en JS, se pone aquí -->
         <input type="hidden" name="to_email" value="peimadin@gmail.com">
 
-        <button type="submit" id="btnEnviar">Enviar</button>
+        <button type="submit">Enviar</button>
       </div>
     </div>
   </form>
