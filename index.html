@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Formulario Saica</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="card">
+  <h2>Formulario Saica</h2>
+  <p class="subtitle">Completa la siguiente información</p>
+
+  <form>
+
+    <label>¿Eres empleado de Saica o externo?</label>
+    <select id="tipoPersona" required>
+      <option value="">Selecciona</option>
+      <option value="saica">Empleado de Saica</option>
+      <option value="externo">Externo</option>
+    </select>
+
+    <!-- SAICA -->
+    <div id="saicaBlock" class="hidden">
+
+      <label>Empresa</label>
+      <select id="empresaSelect">
+        <option value="">Selecciona</option>
+      </select>
+
+      <div id="centroBlock" class="hidden">
+        <label>Centro / Planta</label>
+        <select id="centroSelect">
+          <option value="">Selecciona un centro</option>
+        </select>
+      </div>
+
+      <div id="nombreSaicaBlock" class="hidden">
+        <label>Nombre y apellidos</label>
+        <input type="text" id="nombreSaica">
+      </div>
+
+    </div>
+
+    <!-- EXTERNO -->
+    <div id="externoBlock" class="hidden">
+      <label>Nombre y apellidos</label>
+      <input type="text" id="nombreExterno">
+
+      <div class="checkbox">
+        <input type="checkbox" id="anonimo">
+        <label for="anonimo">Responder como anónimo</label>
+      </div>
+    </div>
+
+    <button type="submit">Enviar</button>
+
+  </form>
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>
