@@ -2,9 +2,8 @@
   "natur": {
     "nombre": "Saica Natur",
     "centros": [
-      "Saica Natur - SMV",
-      "Saica Natur - Villaverde"
-      "Saica Natur - Torrejón"
+      "Saica Natur SMV",
+      "Saica Natur Villaverde"
     ]
   },
   "flex": {
@@ -17,8 +16,8 @@
   "pack": {
     "nombre": "Saica Pack",
     "centros": [
-      "Saica Pack Zaragoza",
-      "Saica Pack Madrid"
+      "Saica Pack Madrid",
+      "Saica Pack Zaragoza"
     ]
   },
   "paper": {
@@ -29,3 +28,4 @@
     ]
   }
 }
+
