@@ -14,9 +14,9 @@ const anonimo = document.getElementById("anonimo");
 
 let SAICA_DATA = {};
 
-// Cargar JSON desde el mismo directorio
-fetch("saica.json")  // <-- ruta correcta si está en el mismo directorio que index.html
-  .then(res => res.json())
+// Cargar JSON
+fetch("saica.json")
+  .then(response => response.json())
   .then(data => {
     SAICA_DATA = data;
 
@@ -25,7 +25,7 @@ fetch("saica.json")  // <-- ruta correcta si está en el mismo directorio que in
       empresaSelect.add(new Option(empresa.nombre, key));
     });
   })
-  .catch(err => console.error("Error cargando datos:", err));
+  .catch(err => console.error("Error cargando JSON:", err));
 
 tipoPersona.addEventListener("change", () => {
   saicaBlock.classList.toggle("hidden", tipoPersona.value !== "saica");
@@ -42,9 +42,9 @@ empresaSelect.addEventListener("change", () => {
   const empresa = SAICA_DATA[empresaSelect.value];
   if (!empresa) return;
 
-  // Ordenar centros alfabéticamente
-  const centrosOrdenados = empresa.centros.slice().sort((a, b) =>
-    a.localeCompare(b, 'es', { sensitivity: 'base' })
+  // Aquí es donde ordenamos correctamente
+  const centrosOrdenados = [...empresa.centros].sort((a, b) =>
+    a.localeCompare(b, "es", { sensitivity: "base" })
   );
 
   centrosOrdenados.forEach(centro => {
