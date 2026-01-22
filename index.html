@@ -5,7 +5,6 @@
   <title>Formulario Saica</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="styles.css">
-  <!-- EmailJS SDK -->
   <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
 </head>
 <body>
@@ -62,7 +61,7 @@
       </div>
 
       <label>Correo electrónico</label>
-      <input type="email" id="emailExterno" name="correo" placeholder="nombre@ejemplo.com" required>
+      <input type="email" id="emailExterno" name="correo" placeholder="nombre@ejemplo.com">
     </div>
 
     <!-- BOTÓN CONTINUAR -->
@@ -88,18 +87,15 @@
 
       <div id="propuestaBlock" class="hidden">
         <label>Describe la propuesta de mejora de seguridad</label>
-        <textarea id="propuesta" name="propuesta" rows="6" placeholder="Describe aquí tu propuesta..." maxlength="500" style="width: 100%;"></textarea>
+        <textarea id="propuesta" name="propuesta" rows="6" placeholder="Describe aquí tu propuesta..." maxlength="500" style="width:100%;"></textarea>
         <div id="contadorPropuesta">0 / 500</div>
 
-        <!-- Adjuntar fotos -->
-        <label for="fotosAdjuntas" style="cursor:pointer; color: var(--saica-green); font-weight:600;">📎 Adjuntar fotos</label>
+        <label for="fotosAdjuntas" style="cursor:pointer; color: green; font-weight:600;">📎 Adjuntar fotos</label>
         <input type="file" id="fotosAdjuntas" name="fotosAdjuntas" accept="image/*" multiple>
 
-        <!-- Botón final enviar -->
         <button type="submit" id="btnEnviar">Enviar</button>
       </div>
     </div>
-
   </form>
 </div>
 
