@@ -195,13 +195,13 @@ labelFotos && labelFotos.addEventListener("click", () => {
 });
 
 // ===== VALIDACIÓN FINAL DEL FORM =====
-const form = document.getElementById("formulario");
 form.addEventListener("submit", e => {
+  e.preventDefault();
+
   // Validación propuesta
   if (!propuesta.value.trim()) {
     alert("Debes describir la propuesta de mejora antes de continuar");
     propuesta.focus();
-    e.preventDefault();
     return;
   }
 
@@ -209,9 +209,11 @@ form.addEventListener("submit", e => {
   if (tipoPersona.value === "externo" && !emailRegex.test(emailExterno.value.trim())) {
     alert("Introduce un correo electrónico válido (ej: nombre@empresa.com)");
     emailExterno.focus();
-    e.preventDefault();
     return;
   }
 
+  // Aquí se puede integrar envío real vía EmailJS o backend
   alert("Formulario enviado correctamente. ¡Gracias por participar!");
+  form.reset();
+  location.reload();
 });
