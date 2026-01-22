@@ -86,10 +86,19 @@ button:hover {
 #propuesta {
   width: 100%;
   box-sizing: border-box;
-  resize: none;          /* ❌ no se puede redimensionar */
+  resize: none;         /* No se puede redimensionar */
   min-height: 140px;
   max-height: 140px;
   font-family: inherit;
+  padding: 10px;
+  font-size: 1rem;
+}
+
+#contadorPropuesta {
+  font-size: 0.9rem;
+  color: #555;
+  text-align: right;
+  margin-top: 4px;
 }
 
 /* Nombre y Apellidos siempre en mayúsculas */
@@ -119,5 +128,6 @@ button:hover {
   font-size: 16px;
   margin: 0; /* evita margen extra */
 }
+
 
 
