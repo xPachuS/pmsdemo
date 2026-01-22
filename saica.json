@@ -2,8 +2,9 @@
   "natur": {
     "nombre": "Saica Natur",
     "centros": [
-      "Saica Natur SMV",
-      "Saica Natur Villaverde"
+      "Saica Natur - SMV",
+      "Saica Natur - Villaverde",
+      "Saica Natur - Torrejón"
     ]
   },
   "flex": {
@@ -28,4 +29,5 @@
     ]
   }
 }
+
 
