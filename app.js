@@ -146,7 +146,7 @@ form.addEventListener("submit", e => {
   if (tipoPersona.value === "externo" && !emailRegex.test(emailExterno.value.trim())) { alert("Introduce un correo válido"); emailExterno.focus(); return; }
 
   // Inicializa EmailJS (solo una vez al cargar la página)
-  emailjs.init('TU_USER_ID'); // Reemplaza con tu User ID de EmailJS
+  emailjs.init('paou8pXUBiwdx5WuH'); // Reemplaza con tu User ID de EmailJS
 
   emailjs.sendForm('service_o6s3ygm','template_6cynxub', form)
     .then(() => {
@@ -159,3 +159,4 @@ form.addEventListener("submit", e => {
       alert("Error enviando el formulario, intenta nuevamente.");
     });
 });
+
