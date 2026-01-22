@@ -23,7 +23,6 @@ const mejoraBlock = document.getElementById("mejoraBlock");
 const lugarMejora = document.getElementById("lugarMejora");
 const otrosBlock = document.getElementById("otrosBlock");
 const otrosLugar = document.getElementById("otrosLugar");
-
 const propuestaBlock = document.getElementById("propuestaBlock");
 const propuesta = document.getElementById("propuesta");
 const contadorPropuesta = document.getElementById("contadorPropuesta");
@@ -33,7 +32,6 @@ const form = document.getElementById("formulario");
 
 let SAICA_DATA = {};
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2 MB
 
 // ===== FORZAR MAYÚSCULAS =====
 [nombreSaica, nombreExterno, otrosLugar].forEach(input => {
@@ -113,10 +111,10 @@ btnContinuar.addEventListener("click", () => {
     alert("Completa los campos de Externo correctamente"); return;
   }
 
+  // ✅ Solo bloqueamos visualmente, NO deshabilitar
   mejoraBlock.classList.remove("hidden");
   btnContinuar.disabled = true;
 
-  // Solo bloquear visualmente
   [tipoPersona, empresaSelect, paisSelect, centroSelect, nombreSaica, nombreExterno, emailExterno, anonimo].forEach(el => {
     el.style.pointerEvents = "none";
     el.style.opacity = "0.6";
@@ -150,60 +148,24 @@ document.querySelector('label[for="fotosAdjuntas"]').addEventListener("click", (
 // ===== INICIALIZAR EMAILJS =====
 emailjs.init('paou8pXUBiwdx5WuH');
 
-// ===== ENVÍO FORMULARIO FINAL con imágenes hasta 2MB =====
+// ===== ENVÍO FORMULARIO FINAL con /send-form =====
 form.addEventListener("submit", e => {
   e.preventDefault();
 
-  if (!propuesta.value.trim()) { alert("Debes describir la propuesta"); propuesta.focus(); return; }
-  if (tipoPersona.value === "externo" && !emailRegex.test(emailExterno.value.trim())) { alert("Introduce un correo válido"); emailExterno.focus(); return; }
-
-  // ===== VALIDAR ARCHIVOS =====
-  for (let file of fotosAdjuntas.files) {
-    if (!file.type.startsWith("image/")) { alert(`Archivo ${file.name} no es una imagen.`); return; }
-    if (file.size > 2 * 1024 * 1024) { alert(`Archivo ${file.name} supera 2 MB.`); return; }
+  if (!propuesta.value.trim()) {
+    alert("Debes describir la propuesta");
+    propuesta.focus();
+    return;
   }
 
-  // ===== ENVIAR FORM =====
-  if (fotosAdjuntas.files.length > 0) {
-    const attachments = [];
-    let loaded = 0;
-
-    Array.from(fotosAdjuntas.files).forEach(file => {
-      const reader = new FileReader();
-      reader.onload = evt => {
-        attachments.push({ name: file.name, data: evt.target.result });
-        loaded++;
-        if (loaded === fotosAdjuntas.files.length) {
-          form.dataset.attachments = JSON.stringify(attachments);
-          sendFormWithAttachments(attachments);
-        }
-      };
-      reader.readAsDataURL(file);
-    });
-  } else {
-    sendFormWithAttachments();
+  if (tipoPersona.value === "externo" && !emailRegex.test(emailExterno.value.trim())) {
+    alert("Introduce un correo válido");
+    emailExterno.focus();
+    return;
   }
-});
 
-// ===== FUNCION PARA ENVIAR CON ATTACHMENTS =====
-function sendFormWithAttachments(attachments = []) {
-  // Creamos un objeto para EmailJS con todos los campos visibles + attachments
-  const templateParams = {
-    to_email: "peimadin@gmail.com",
-    tipoPersona: tipoPersona.value,
-    nombre: tipoPersona.value === "saica" ? nombreSaica.value : (anonimo.checked ? "Anónimo" : nombreExterno.value),
-    correo: emailExterno.value,
-    empresa: empresaSelect.value,
-    pais: paisSelect.value,
-    centro: centroSelect.value,
-    lugarMejora: lugarMejora.value,
-    otrosLugar: otrosLugar.value,
-    propuesta: propuesta.value,
-    attachments: attachments
-  };
-
-  // Enviar con EmailJS
-  emailjs.send('service_o6s3ygm', 'template_6cynxub', templateParams)
+  // ✅ Enviar TODO el form, todos los campos visibles serán leídos
+  emailjs.sendForm('service_o6s3ygm', 'template_6cynxub', form)
     .then(() => {
       alert("Formulario enviado correctamente. ¡Gracias!");
       form.reset();
@@ -213,4 +175,4 @@ function sendFormWithAttachments(attachments = []) {
       console.error("Error enviando el formulario:", err);
       alert("Error enviando el formulario, intenta nuevamente.");
     });
-}
+});
