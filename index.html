@@ -5,6 +5,12 @@
   <title>Formulario Saica</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="styles.css">
+  <!-- EmailJS SDK -->
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script>
+    // Inicializa EmailJS con tu Public Key
+    emailjs.init('sWWKZZVhXL3sE1bp6'); <!-- reemplaza con tu User ID de EmailJS -->
+  </script>
 </head>
 <body>
 
@@ -24,7 +30,6 @@
 
     <!-- SAICA -->
     <div id="saicaBlock" class="hidden">
-
       <label>Empresa</label>
       <select id="empresaSelect">
         <option value="">Selecciona</option>
@@ -48,12 +53,10 @@
         <label>Nombre y apellidos</label>
         <input type="text" id="nombreSaica" style="text-transform: uppercase">
       </div>
-
     </div>
 
     <!-- EXTERNO -->
     <div id="externoBlock" class="hidden">
-
       <label>Nombre y apellidos</label>
       <input type="text" id="nombreExterno" style="text-transform: uppercase">
 
@@ -64,7 +67,6 @@
 
       <label>Correo electrónico</label>
       <input type="email" id="emailExterno" placeholder="nombre@ejemplo.com" required>
-
     </div>
 
     <!-- BOTÓN CONTINUAR -->
@@ -72,7 +74,6 @@
 
     <!-- BLOQUE MEJORA -->
     <div id="mejoraBlock" class="hidden">
-
       <label>¿Dónde detectaste la mejora?</label>
       <select id="lugarMejora">
         <option value="">Selecciona una opción</option>
@@ -91,7 +92,7 @@
 
       <div id="propuestaBlock" class="hidden">
         <label>Describe la propuesta de mejora de seguridad</label>
-        <textarea id="propuesta" rows="6" placeholder="Describe aquí tu propuesta..." maxlength="500" style="width: 100%;"></textarea>
+        <textarea id="propuesta" rows="6" placeholder="Describe aquí tu propuesta..." maxlength="500"></textarea>
         <div id="contadorPropuesta">0 / 500</div>
 
         <!-- Adjuntar fotos -->
@@ -101,7 +102,6 @@
         <!-- Botón final enviar -->
         <button type="submit" id="btnEnviar">Enviar</button>
       </div>
-
     </div>
 
   </form>
@@ -110,3 +110,4 @@
 <script src="app.js"></script>
 </body>
 </html>
+
