@@ -83,6 +83,15 @@ button:hover {
   display: none;
 }
 
+#propuesta {
+  width: 100%;
+  box-sizing: border-box;
+  resize: none;          /* ❌ no se puede redimensionar */
+  min-height: 140px;
+  max-height: 140px;
+  font-family: inherit;
+}
+
 /* Nombre y Apellidos siempre en mayúsculas */
 #nombreSaica,
 #nombreExterno {
@@ -110,4 +119,5 @@ button:hover {
   font-size: 16px;
   margin: 0; /* evita margen extra */
 }
+
 
