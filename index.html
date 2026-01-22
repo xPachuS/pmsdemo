@@ -57,6 +57,7 @@
 
     <!-- EXTERNO -->
     <div id="externoBlock" class="hidden">
+
       <label>Nombre y apellidos</label>
       <input
         type="text"
@@ -68,6 +69,14 @@
         <input type="checkbox" id="anonimo">
         <label for="anonimo">Responder como anónimo</label>
       </div>
+
+      <label>Correo electrónico</label>
+      <input
+        type="email"
+        id="emailExterno"
+        placeholder="nombre@ejemplo.com"
+      >
+
     </div>
 
     <!-- CONTINUAR -->
@@ -89,7 +98,11 @@
 
       <div id="otrosBlock" class="hidden">
         <label>Indica dónde</label>
-        <input type="text" id="otrosLugar">
+        <input
+          type="text"
+          id="otrosLugar"
+          style="text-transform: uppercase"
+        >
       </div>
 
       <div id="propuestaBlock" class="hidden">
