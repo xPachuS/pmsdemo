@@ -102,9 +102,25 @@ anonimo.addEventListener("change", () => {
   if (anonimo.checked) nombreExterno.value = "";
 });
 
+// ===== FUNCIÓN BLOQUEO =====
+function bloquearDatosIniciales() {
+  const elementos = [
+    tipoPersona,
+    empresaSelect,
+    paisSelect,
+    centroSelect,
+    nombreSaica,
+    nombreExterno,
+    anonimo
+  ];
+
+  elementos.forEach(el => {
+    if (el) el.disabled = true;
+  });
+}
+
 // ===== CONTINUAR =====
 btnContinuar.addEventListener("click", () => {
-  // Validación básica
   if (!tipoPersona.value) {
     alert("Selecciona el tipo de persona");
     return;
@@ -124,6 +140,8 @@ btnContinuar.addEventListener("click", () => {
 
   mejoraBlock.classList.remove("hidden");
   btnContinuar.disabled = true;
+
+  bloquearDatosIniciales(); // 🔒 BLOQUEO DEFINITIVO
 });
 
 // ===== LUGAR MEJORA =====
