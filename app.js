@@ -26,6 +26,7 @@ const otrosLugar = document.getElementById("otrosLugar");
 const propuestaBlock = document.getElementById("propuestaBlock");
 const propuesta = document.getElementById("propuesta");
 const contadorPropuesta = document.getElementById("contadorPropuesta");
+const fotosAdjuntas = document.getElementById("fotosAdjuntas");
 
 let SAICA_DATA = {};
 
@@ -69,7 +70,6 @@ tipoPersona.addEventListener("change", () => {
 empresaSelect.addEventListener("change", () => {
   paisSelect.innerHTML = '<option value="">Selecciona un país</option>';
   centroSelect.innerHTML = '<option value="">Selecciona un centro</option>';
-
   paisBlock.classList.add("hidden");
   centroBlock.classList.add("hidden");
   nombreSaicaBlock.classList.add("hidden");
@@ -78,7 +78,7 @@ empresaSelect.addEventListener("change", () => {
   if (!empresa) return;
 
   Object.keys(empresa.paises)
-    .sort((a, b) => a.localeCompare(b, "es"))
+    .sort((a,b) => a.localeCompare(b,"es"))
     .forEach(pais => paisSelect.add(new Option(pais, pais)));
 
   paisBlock.classList.remove("hidden");
@@ -95,7 +95,7 @@ paisSelect.addEventListener("change", () => {
   if (!empresa || !pais) return;
 
   empresa.paises[pais]
-    .sort((a, b) => a.localeCompare(b, "es"))
+    .sort((a,b) => a.localeCompare(b,"es"))
     .forEach(centro => centroSelect.add(new Option(centro, centro)));
 
   centroBlock.classList.remove("hidden");
@@ -155,7 +155,6 @@ btnContinuar.addEventListener("click", () => {
     }
   }
 
-  // Mostrar bloque mejora
   mejoraBlock.classList.remove("hidden");
   btnContinuar.disabled = true;
   bloquearDatosIniciales();
@@ -189,12 +188,30 @@ propuesta.addEventListener("input", () => {
   contadorPropuesta.textContent = `${length} / 500`;
 });
 
+// ===== SUBIR FOTOS =====
+const labelFotos = document.querySelector('label[for="fotosAdjuntas"]');
+labelFotos && labelFotos.addEventListener("click", () => {
+  fotosAdjuntas.click();
+});
+
 // ===== VALIDACIÓN FINAL DEL FORM =====
 const form = document.getElementById("formulario");
 form.addEventListener("submit", e => {
-  if (!propuestaBlock.classList.contains("hidden") && !propuesta.value.trim()) {
+  // Validación propuesta
+  if (!propuesta.value.trim()) {
     alert("Debes describir la propuesta de mejora antes de continuar");
     propuesta.focus();
     e.preventDefault();
+    return;
   }
+
+  // Validación email externo
+  if (tipoPersona.value === "externo" && !emailRegex.test(emailExterno.value.trim())) {
+    alert("Introduce un correo electrónico válido (ej: nombre@empresa.com)");
+    emailExterno.focus();
+    e.preventDefault();
+    return;
+  }
+
+  alert("Formulario enviado correctamente. ¡Gracias por participar!");
 });
