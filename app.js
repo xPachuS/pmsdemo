@@ -141,19 +141,16 @@ propuesta.addEventListener("input", () => {
 
 document.querySelector('label[for="fotosAdjuntas"]').addEventListener("click", () => fotosAdjuntas.click());
 
-// ===== INICIALIZAR EMAILJS =====
-emailjs.init('paou8pXUBiwdx5WuH'); // Reemplaza con tu User ID de EmailJS
+// Inicializa EmailJS solo una vez
+emailjs.init('paou8pXUBiwdx5WuH');
 
-// ===== ENVÍO FORMULARIO =====
 form.addEventListener("submit", e => {
   e.preventDefault();
 
   if (!propuesta.value.trim()) { alert("Debes describir la propuesta"); propuesta.focus(); return; }
   if (tipoPersona.value === "externo" && !emailRegex.test(emailExterno.value.trim())) { alert("Introduce un correo válido"); emailExterno.focus(); return; }
 
-  // Construir objeto de envío
   const templateParams = {
-    to_email: "peimadin@gmail.com", // destinatario fijo
     tipoPersona: tipoPersona.value,
     nombre: tipoPersona.value === "saica" ? nombreSaica.value : (anonimo.checked ? "Anónimo" : nombreExterno.value),
     correo: emailExterno.value,
@@ -169,7 +166,6 @@ form.addEventListener("submit", e => {
   if (fotosAdjuntas.files.length > 0) {
     const attachments = [];
     let loaded = 0;
-
     Array.from(fotosAdjuntas.files).forEach(file => {
       const reader = new FileReader();
       reader.onload = evt => {
@@ -187,7 +183,6 @@ form.addEventListener("submit", e => {
   }
 });
 
-// ===== FUNCION ENVIAR EMAIL =====
 function enviarEmail(params) {
   emailjs.send('service_o6s3ygm', 'template_6cynxub', params)
     .then(() => {
@@ -196,9 +191,7 @@ function enviarEmail(params) {
       location.reload();
     })
     .catch(err => {
-      console.error(err);
+      console.error("Error EmailJS:", err);
       alert("Error enviando el formulario, intenta nuevamente.");
     });
 }
-
-
