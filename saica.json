@@ -2,9 +2,14 @@
   "natur": {
     "nombre": "Saica Natur",
     "centros": [
-      "Saica Natur - SMV",
+      "Saica Natur - San Martín de la Vega",
       "Saica Natur - Villaverde",
-      "Saica Natur - Torrejón"
+      "Saica Natur - Torrejón",
+      "Saica Natur - Zona Franca",
+      "Saica Natur - Montornès del Vallès",
+      "Saica Natur - Tarragona",
+      "Saica Natur - El Burgo de Ebro",
+      "Saica Natur - Zaragoza"
     ]
   },
   "flex": {
@@ -29,5 +34,6 @@
     ]
   }
 }
+
 
 
