@@ -12,7 +12,7 @@
   <h2>Formulario Saica</h2>
   <p class="subtitle">Completa la siguiente información</p>
 
-  <form>
+  <form id="formulario">
 
     <!-- Tipo de persona -->
     <label>¿Eres empleado de Saica o externo?</label>
@@ -25,13 +25,11 @@
     <!-- SAICA -->
     <div id="saicaBlock" class="hidden">
 
-      <!-- Empresa -->
       <label>Empresa</label>
       <select id="empresaSelect">
         <option value="">Selecciona</option>
       </select>
 
-      <!-- País -->
       <div id="paisBlock" class="hidden">
         <label>País</label>
         <select id="paisSelect">
@@ -39,7 +37,6 @@
         </select>
       </div>
 
-      <!-- Centro / Planta -->
       <div id="centroBlock" class="hidden">
         <label>Centro / Planta</label>
         <select id="centroSelect">
@@ -47,10 +44,13 @@
         </select>
       </div>
 
-      <!-- Nombre -->
       <div id="nombreSaicaBlock" class="hidden">
         <label>Nombre y apellidos</label>
-        <input type="text" id="nombreSaica">
+        <input
+          type="text"
+          id="nombreSaica"
+          style="text-transform: uppercase"
+        >
       </div>
 
     </div>
@@ -58,26 +58,54 @@
     <!-- EXTERNO -->
     <div id="externoBlock" class="hidden">
       <label>Nombre y apellidos</label>
-      <input type="text" id="nombreExterno">
+      <input
+        type="text"
+        id="nombreExterno"
+        style="text-transform: uppercase"
+      >
 
-      <br>
-      <br>
-
-      <!-- Checkbox animado centrado -->
       <div class="checkbox-container">
         <input type="checkbox" id="anonimo">
         <label for="anonimo">Responder como anónimo</label>
       </div>
     </div>
 
-    <button type="submit">Enviar</button>
+    <!-- CONTINUAR -->
+    <button type="button" id="btnContinuar">Continuar</button>
+
+    <!-- BLOQUE MEJORA -->
+    <div id="mejoraBlock" class="hidden">
+
+      <label>¿Dónde detectaste la mejora?</label>
+      <select id="lugarMejora">
+        <option value="">Selecciona una opción</option>
+        <option value="Almacén">Almacén</option>
+        <option value="Producción">Producción</option>
+        <option value="Oficinas">Oficinas</option>
+        <option value="Vestuarios">Vestuarios</option>
+        <option value="Zonas Comunes">Zonas Comunes</option>
+        <option value="Otros">Otros</option>
+      </select>
+
+      <div id="otrosBlock" class="hidden">
+        <label>Indica dónde</label>
+        <input type="text" id="otrosLugar">
+      </div>
+
+      <div id="propuestaBlock" class="hidden">
+        <label>Describe la propuesta de mejora de seguridad</label>
+        <textarea
+          id="propuesta"
+          rows="6"
+          placeholder="Describe aquí tu propuesta..."
+        ></textarea>
+      </div>
+
+    </div>
 
   </form>
 </div>
 
-<script src="saica.json"></script> <!-- Si usas data.js, cambia esta línea por <script src="data.js"></script> -->
 <script src="app.js"></script>
-
 </body>
 </html>
-
