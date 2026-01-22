@@ -1,45 +1,28 @@
 {
   "natur": {
     "nombre": "Saica Natur",
-    "centros": [
-      "Saica Natur - San Martín de la Vega",
-      "Saica Natur - Villaverde",
-      "Saica Natur - Torrejón",
-      "Saica Natur - Zona Franca",
-      "Saica Natur - Montornès del Vallès",
-      "Saica Natur - Tarragona",
-      "Saica Natur - El Burgo de Ebro",
-      "Saica Natur - Zaragoza"
-    ]
+    "paises": {
+      "España": ["Saica Natur - San Martín de la Vega", "Saica Natur - Villaverde", "Saica Natur - Torrejón", "Saica Natur - Zona Franca", "Saica Natur - Montornès del Vallès", "Saica Natur - Tarragona", "Saica Natur - El Burgo de Ebro", "Saica Natur - Zaragoza"],
+      "Francia": ["Saica Natur Sud – Caumont"]
+    }
   },
   "flex": {
     "nombre": "Saica Flex",
-    "centros": [
-      "Saica Flex - Zaragoza",
-      "Saica Flex - Valdemoro"
-    ]
+    "paises": {
+      "España": ["Saica Flex - Zaragoza", "Saica Flex - Valdemoro"]
+    }
   },
   "pack": {
     "nombre": "Saica Pack",
-    "centros": [
-      "Saica Pack - Alcobendas",
-      "Saica Pack - Meco",
-      "Saica Pack - Velilla de San Antonio",
-      "Saica Pack - El Prat de Llobregat",
-      "Saica Pack - Barcelona",
-      "Saica Pack - Amposta / L’Aldea"
-    ]
+    "paises": {
+      "España": ["Saica Pack - Alcobendas", "Saica Pack - Meco", "Saica Pack - Velilla de San Antonio", "Saica Pack - El Prat de Llobregat", "Saica Pack - Barcelona", "Saica Pack - Amposta / L’Aldea"],
+      "Francia": ["Saica Pack – Doullens", "Saica Pack – Poix‑de‑Picardie", "Saica Pack – Venizel", "Saica Pack – Montsûrs", "Saica Pack – Laval", "Saica Pack – Beaulac", "Saica Pack – Lamirande", "Saica Pack – Châteauneuf‑la‑Forêt", "Saica Pack – Saint‑Junien", "Saica Pack – Toulouse"]
+    }
   },
   "paper": {
     "nombre": "Saica Paper",
-    "centros": [
-      "Saica Paper - El Burgo de Ebro",
-      "Saica Paper - Zaragoza"
-    ]
+    "paises": {
+      "España": ["Saica Paper - El Burgo de Ebro", "Saica Paper - Zaragoza"]
+    }
   }
 }
-
-
-
-
-
