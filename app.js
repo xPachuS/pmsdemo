@@ -14,6 +14,7 @@ const nombreSaicaBlock = document.getElementById("nombreSaicaBlock");
 const nombreSaica = document.getElementById("nombreSaica");
 
 const nombreExterno = document.getElementById("nombreExterno");
+const emailExterno = document.getElementById("emailExterno");
 const anonimo = document.getElementById("anonimo");
 
 const btnContinuar = document.getElementById("btnContinuar");
@@ -50,7 +51,14 @@ fetch("saica.json")
 tipoPersona.addEventListener("change", () => {
   saicaBlock.classList.toggle("hidden", tipoPersona.value !== "saica");
   externoBlock.classList.toggle("hidden", tipoPersona.value !== "externo");
-  nombreExterno.required = tipoPersona.value === "externo" && !anonimo.checked;
+
+  if (tipoPersona.value === "externo") {
+    emailExterno.required = true;
+    nombreExterno.required = !anonimo.checked;
+  } else {
+    emailExterno.required = false;
+    emailExterno.value = "";
+  }
 });
 
 // ===== EMPRESA =====
@@ -111,6 +119,7 @@ function bloquearDatosIniciales() {
     centroSelect,
     nombreSaica,
     nombreExterno,
+    emailExterno,
     anonimo
   ];
 
@@ -133,15 +142,21 @@ btnContinuar.addEventListener("click", () => {
     }
   }
 
-  if (tipoPersona.value === "externo" && !anonimo.checked && !nombreExterno.value) {
-    alert("Introduce tu nombre o marca anónimo");
-    return;
+  if (tipoPersona.value === "externo") {
+    if (!emailExterno.value) {
+      alert("Introduce un correo electrónico para poder agradecer tu participación");
+      return;
+    }
+
+    if (!anonimo.checked && !nombreExterno.value) {
+      alert("Introduce tu nombre o marca anónimo");
+      return;
+    }
   }
 
   mejoraBlock.classList.remove("hidden");
   btnContinuar.disabled = true;
-
-  bloquearDatosIniciales(); // 🔒 BLOQUEO DEFINITIVO
+  bloquearDatosIniciales();
 });
 
 // ===== LUGAR MEJORA =====
