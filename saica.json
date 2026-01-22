@@ -1,0 +1,30 @@
+{
+  "natur": {
+    "nombre": "Saica Natur",
+    "centros": [
+      "Saica Natur SMV",
+      "Saica Natur Villaverde"
+    ]
+  },
+  "flex": {
+    "nombre": "Saica Flex",
+    "centros": [
+      "Saica Flex Barcelona",
+      "Saica Flex Coruña"
+    ]
+  },
+  "pack": {
+    "nombre": "Saica Pack",
+    "centros": [
+      "Saica Pack Zaragoza",
+      "Saica Pack Madrid"
+    ]
+  },
+  "paper": {
+    "nombre": "Saica Paper",
+    "centros": [
+      "Saica Paper El Burgo",
+      "Saica Paper Zaragoza"
+    ]
+  }
+}
