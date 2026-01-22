@@ -15,8 +15,8 @@
   "flex": {
     "nombre": "Saica Flex",
     "centros": [
-      "Saica Flex Barcelona",
-      "Saica Flex Coruña"
+      "Saica Flex - Zaragoza",
+      "Saica Flex - Valdemoro"
     ]
   },
   "pack": {
@@ -34,6 +34,7 @@
     ]
   }
 }
+
 
 
 
