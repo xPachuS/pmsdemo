@@ -52,8 +52,8 @@ fetch("saica.json")
 
 // ===== EVENTOS =====
 tipoPersona.addEventListener("change", () => {
-  saicaBlock.classList.toggle("hidden", tipoPersona.value !== "saica");
-  externoBlock.classList.toggle("hidden", tipoPersona.value !== "externo");
+  saicaBlock.classList.toggle("hidden", tipoPersona.value !== "Saica");
+  externoBlock.classList.toggle("hidden", tipoPersona.value !== "Externo");
   emailExterno.required = tipoPersona.value === "externo";
   nombreExterno.required = tipoPersona.value === "externo" && !anonimo.checked;
 });
@@ -176,6 +176,7 @@ form.addEventListener("submit", e => {
       alert("Error enviando el formulario, intenta nuevamente.");
     });
 });
+
 
 
 
