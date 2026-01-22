@@ -83,10 +83,10 @@ button:hover {
   display: none;
 }
 
-/* Checkbox simple centrado con label */
+/* Checkbox simple alineado a la izquierda con label */
 .checkbox-container {
   display: flex;
-  justify-content: center; /* Centrar todo horizontalmente */
+  justify-content: flex-start; /* alineado a la izquierda */
   align-items: center;
   margin: 1em 0;
   gap: 10px; /* espacio entre checkbox y texto */
@@ -102,5 +102,5 @@ button:hover {
 .checkbox-container label {
   cursor: pointer;
   font-size: 16px;
-  margin: 0; /* evitar margen extra */
+  margin: 0; /* evita margen extra */
 }
