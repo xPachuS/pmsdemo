@@ -141,13 +141,19 @@ propuesta.addEventListener("input", () => {
 
 document.querySelector('label[for="fotosAdjuntas"]').addEventListener("click", () => fotosAdjuntas.click());
 
-// Inicializa EmailJS solo una vez
-emailjs.init('paou8pXUBiwdx5WuH');
+// ===== INICIALIZAR EMAILJS =====
+emailjs.init('paou8pXUBiwdx5WuH'); // Reemplaza con tu User ID de EmailJS
 
+// ===== ENVÍO FORMULARIO =====
 form.addEventListener("submit", e => {
   e.preventDefault();
 
+  if (!propuesta.value.trim()) { alert("Debes describir la propuesta"); propuesta.focus(); return; }
+  if (tipoPersona.value === "externo" && !emailRegex.test(emailExterno.value.trim())) { alert("Introduce un correo válido"); emailExterno.focus(); return; }
+
+  // Construir objeto de envío
   const templateParams = {
+    to_email: "peimadin@gmail.com", // destinatario fijo
     tipoPersona: tipoPersona.value,
     nombre: tipoPersona.value === "saica" ? nombreSaica.value : (anonimo.checked ? "Anónimo" : nombreExterno.value),
     correo: emailExterno.value,
@@ -159,17 +165,38 @@ form.addEventListener("submit", e => {
     propuesta: propuesta.value
   };
 
-  emailjs.sendForm('service_o6s3ygm', 'template_6cynxub', templateParams)
+  // Adjuntar fotos si existen
+  if (fotosAdjuntas.files.length > 0) {
+    const attachments = [];
+    let loaded = 0;
+
+    Array.from(fotosAdjuntas.files).forEach(file => {
+      const reader = new FileReader();
+      reader.onload = evt => {
+        attachments.push({ name: file.name, data: evt.target.result });
+        loaded++;
+        if (loaded === fotosAdjuntas.files.length) {
+          templateParams.attachments = attachments;
+          enviarEmail(templateParams);
+        }
+      };
+      reader.readAsDataURL(file);
+    });
+  } else {
+    enviarEmail(templateParams);
+  }
+});
+
+// ===== FUNCION ENVIAR EMAIL =====
+function enviarEmail(params) {
+  emailjs.sendForm('service_o6s3ygm', 'template_6cynxub', params)
     .then(() => {
       alert("Formulario enviado correctamente. ¡Gracias!");
       form.reset();
       location.reload();
     })
     .catch(err => {
-      console.error("Error EmailJS:", err);
+      console.error(err);
       alert("Error enviando el formulario, intenta nuevamente.");
     });
-});
-
-
-
+}
