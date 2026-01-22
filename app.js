@@ -31,16 +31,12 @@ const fotosAdjuntas = document.getElementById("fotosAdjuntas");
 const form = document.getElementById("formulario");
 
 let SAICA_DATA = {};
-
-// ===== REGEX EMAIL =====
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 // ===== FORZAR MAYÚSCULAS =====
 [nombreSaica, nombreExterno, otrosLugar].forEach(input => {
   if (!input) return;
-  input.addEventListener("input", () => {
-    input.value = input.value.toUpperCase();
-  });
+  input.addEventListener("input", () => input.value = input.value.toUpperCase());
 });
 
 // ===== CARGAR JSON =====
@@ -54,21 +50,14 @@ fetch("saica.json")
   })
   .catch(err => console.error("Error cargando JSON:", err));
 
-// ===== TIPO DE PERSONA =====
+// ===== EVENTOS =====
 tipoPersona.addEventListener("change", () => {
   saicaBlock.classList.toggle("hidden", tipoPersona.value !== "saica");
   externoBlock.classList.toggle("hidden", tipoPersona.value !== "externo");
-
-  if (tipoPersona.value === "externo") {
-    emailExterno.required = true;
-    nombreExterno.required = !anonimo.checked;
-  } else {
-    emailExterno.required = false;
-    emailExterno.value = "";
-  }
+  emailExterno.required = tipoPersona.value === "externo";
+  nombreExterno.required = tipoPersona.value === "externo" && !anonimo.checked;
 });
 
-// ===== EMPRESA =====
 empresaSelect.addEventListener("change", () => {
   paisSelect.innerHTML = '<option value="">Selecciona un país</option>';
   centroSelect.innerHTML = '<option value="">Selecciona un centro</option>';
@@ -79,14 +68,10 @@ empresaSelect.addEventListener("change", () => {
   const empresa = SAICA_DATA[empresaSelect.value];
   if (!empresa) return;
 
-  Object.keys(empresa.paises)
-    .sort((a,b) => a.localeCompare(b,"es"))
-    .forEach(pais => paisSelect.add(new Option(pais, pais)));
-
+  Object.keys(empresa.paises).sort((a,b) => a.localeCompare(b,"es")).forEach(pais => paisSelect.add(new Option(pais,pais)));
   paisBlock.classList.remove("hidden");
 });
 
-// ===== PAÍS =====
 paisSelect.addEventListener("change", () => {
   centroSelect.innerHTML = '<option value="">Selecciona un centro</option>';
   centroBlock.classList.add("hidden");
@@ -96,107 +81,65 @@ paisSelect.addEventListener("change", () => {
   const pais = paisSelect.value;
   if (!empresa || !pais) return;
 
-  empresa.paises[pais]
-    .sort((a,b) => a.localeCompare(b,"es"))
-    .forEach(centro => centroSelect.add(new Option(centro, centro)));
-
+  empresa.paises[pais].sort((a,b)=>a.localeCompare(b,"es")).forEach(centro => centroSelect.add(new Option(centro, centro)));
   centroBlock.classList.remove("hidden");
 });
 
-// ===== CENTRO =====
 centroSelect.addEventListener("change", () => {
   const mostrar = !!centroSelect.value;
   nombreSaicaBlock.classList.toggle("hidden", !mostrar);
   nombreSaica.required = mostrar;
 });
 
-// ===== ANÓNIMO =====
 anonimo.addEventListener("change", () => {
   nombreExterno.required = !anonimo.checked;
   if (anonimo.checked) nombreExterno.value = "";
 });
 
-// ===== BLOQUEO CAMPOS INICIALES =====
-function bloquearDatosIniciales() {
-  [
-    tipoPersona,
-    empresaSelect,
-    paisSelect,
-    centroSelect,
-    nombreSaica,
-    nombreExterno,
-    emailExterno,
-    anonimo
-  ].forEach(el => el && (el.disabled = true));
-}
-
-// ===== CONTINUAR =====
 btnContinuar.addEventListener("click", () => {
   if (!tipoPersona.value) { alert("Selecciona el tipo de persona"); return; }
-
-  if (tipoPersona.value === "saica") {
-    if (!empresaSelect.value || !paisSelect.value || !centroSelect.value || !nombreSaica.value) {
-      alert("Completa todos los campos de Saica"); return;
-    }
+  if (tipoPersona.value === "saica" && (!empresaSelect.value || !paisSelect.value || !centroSelect.value || !nombreSaica.value)) {
+    alert("Completa todos los campos de Saica"); return;
   }
-
-  if (tipoPersona.value === "externo") {
-    if (!emailRegex.test(emailExterno.value.trim())) {
-      alert("Introduce un correo electrónico válido"); return;
-    }
-    if (!anonimo.checked && !nombreExterno.value) {
-      alert("Introduce tu nombre o marca anónimo"); return;
-    }
+  if (tipoPersona.value === "externo" && (!emailRegex.test(emailExterno.value.trim()) || (!anonimo.checked && !nombreExterno.value))) {
+    alert("Completa los campos de Externo correctamente"); return;
   }
 
   mejoraBlock.classList.remove("hidden");
   btnContinuar.disabled = true;
-  bloquearDatosIniciales();
+  [tipoPersona, empresaSelect, paisSelect, centroSelect, nombreSaica, nombreExterno, emailExterno, anonimo].forEach(el => el.disabled = true);
 });
 
-// ===== LUGAR MEJORA =====
 lugarMejora.addEventListener("change", () => {
   otrosBlock.classList.add("hidden");
   propuestaBlock.classList.add("hidden");
   otrosLugar.required = false;
-
-  if (!lugarMejora.value) return;
 
   if (lugarMejora.value === "Otros") {
     otrosBlock.classList.remove("hidden");
     otrosLugar.required = true;
     return;
   }
-
-  propuestaBlock.classList.remove("hidden");
+  if (lugarMejora.value) propuestaBlock.classList.remove("hidden");
 });
 
-// ===== OTROS =====
 otrosLugar.addEventListener("input", () => {
   propuestaBlock.classList.toggle("hidden", !otrosLugar.value.trim());
 });
 
-// ===== CONTADOR DE PROYECTO =====
-propuesta.addEventListener("input", () => {
-  contadorPropuesta.textContent = `${propuesta.value.length} / 500`;
-});
+propuesta.addEventListener("input", () => contadorPropuesta.textContent = `${propuesta.value.length} / 500`);
 
-// ===== SUBIR FOTOS =====
-const labelFotos = document.querySelector('label[for="fotosAdjuntas"]');
-labelFotos && labelFotos.addEventListener("click", () => fotosAdjuntas.click());
+document.querySelector('.btnAdjuntar').addEventListener("click", () => fotosAdjuntas.click());
 
-// ===== ENVÍO CON EMAILJS =====
+// ===== ENVÍO EMAILJS =====
 form.addEventListener("submit", e => {
   e.preventDefault();
-
-  // Validaciones
   if (!propuesta.value.trim()) { alert("Debes describir la propuesta"); propuesta.focus(); return; }
   if (tipoPersona.value === "externo" && !emailRegex.test(emailExterno.value.trim())) { alert("Introduce un correo válido"); emailExterno.focus(); return; }
 
-  // Construir datos
   const data = {
     tipoPersona: tipoPersona.value,
-    nombre: tipoPersona.value === 'saica' ? nombreSaica.value : (anonimo.checked ? "Anónimo" : nombreExterno.value),
+    nombre: tipoPersona.value==='saica'?nombreSaica.value:(anonimo.checked?"Anónimo":nombreExterno.value),
     correo: emailExterno.value,
     empresa: empresaSelect.value,
     pais: paisSelect.value,
@@ -206,7 +149,7 @@ form.addEventListener("submit", e => {
     propuesta: propuesta.value
   };
 
-  // Adjuntar fotos si existen
+  // Adjuntos
   if (fotosAdjuntas.files.length > 0) {
     const attachments = [];
     let loaded = 0;
@@ -224,17 +167,8 @@ form.addEventListener("submit", e => {
   }
 });
 
-// ===== FUNCIÓN ENVIAR EMAIL =====
 function enviarEmailJS(data, attachments) {
-  emailjs.send('service_o6s3ygm', 'template_6cynxub', { ...data, attachments })
-    .then(() => {
-      alert("Formulario enviado correctamente. ¡Gracias!");
-      form.reset();
-      location.reload();
-    })
-    .catch(err => {
-      console.error(err);
-      alert("Error enviando el formulario, intenta nuevamente.");
-    });
+  emailjs.send('service_o6s3ygm','template_6cynxub',{ ...data, attachments })
+    .then(() => { alert("Formulario enviado correctamente. ¡Gracias!"); form.reset(); location.reload(); })
+    .catch(err => { console.error(err); alert("Error enviando el formulario, intenta nuevamente."); });
 }
-
