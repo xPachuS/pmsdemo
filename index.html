@@ -2,105 +2,73 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Formulario Saica</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="styles.css">
-  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <title>Propuesta de Mejora de Seguridad</title>
+  <style>
+    body { font-family: Arial, sans-serif; color: #333; line-height: 1.5; }
+    h2 { color: #2a7a2a; }
+    .section { margin-bottom: 15px; }
+    .label { font-weight: bold; }
+    .attachment { margin-top: 5px; }
+    img { max-width: 200px; display: block; margin-top: 5px; }
+  </style>
 </head>
 <body>
+  <h2>Nueva Propuesta de Mejora de Seguridad</h2>
 
-<div class="card">
-  <h2>Formulario Saica</h2>
-  <p class="subtitle">Completa la siguiente información</p>
+  <div class="section">
+    <span class="label">Tipo de Persona:</span> {{tipoPersona}}
+  </div>
 
-  <form id="formulario">
+  <div class="section">
+    <span class="label">Nombre:</span> {{nombre}}
+  </div>
 
-    <!-- TIPO DE PERSONA -->
-    <label>¿Eres empleado de Saica o externo?</label>
-    <select id="tipoPersona" name="tipoPersona" required>
-      <option value="">Selecciona</option>
-      <option value="saica">Empleado de Saica</option>
-      <option value="externo">Externo</option>
-    </select>
+  <div class="section">
+    <span class="label">Correo:</span> {{correo}}
+  </div>
 
-    <!-- SAICA -->
-    <div id="saicaBlock" class="hidden">
-      <label>Empresa</label>
-      <select id="empresaSelect" name="empresa">
-        <option value="">Selecciona</option>
-      </select>
+  <div class="section">
+    <span class="label">Empresa:</span> {{empresa}}
+  </div>
 
-      <div id="paisBlock" class="hidden">
-        <label>País</label>
-        <select id="paisSelect" name="pais">
-          <option value="">Selecciona un país</option>
-        </select>
+  <div class="section">
+    <span class="label">País:</span> {{pais}}
+  </div>
+
+  <div class="section">
+    <span class="label">Centro / Planta:</span> {{centro}}
+  </div>
+
+  <div class="section">
+    <span class="label">Lugar de la mejora:</span> {{lugarMejora}}
+  </div>
+
+  <div class="section">
+    <span class="label">Otros lugar:</span> {{otrosLugar}}
+  </div>
+
+  <div class="section">
+    <span class="label">Propuesta:</span>
+    <p>{{propuesta}}</p>
+  </div>
+
+  {% if attachments %}
+  <div class="section">
+    <span class="label">Fotos Adjuntas:</span>
+    {% for attachment in attachments %}
+      <div class="attachment">
+        <span>{{attachment.name}}</span><br>
+        <img src="{{attachment.data}}" alt="{{attachment.name}}">
       </div>
+    {% endfor %}
+  </div>
+  {% endif %}
 
-      <div id="centroBlock" class="hidden">
-        <label>Centro / Planta</label>
-        <select id="centroSelect" name="centro">
-          <option value="">Selecciona un centro</option>
-        </select>
-      </div>
-
-      <div id="nombreSaicaBlock" class="hidden">
-        <label>Nombre y apellidos</label>
-        <input type="text" id="nombreSaica" name="nombre" style="text-transform: uppercase">
-      </div>
-    </div>
-
-    <!-- EXTERNO -->
-    <div id="externoBlock" class="hidden">
-      <label>Nombre y apellidos</label>
-      <input type="text" id="nombreExterno" name="nombre" style="text-transform: uppercase">
-
-      <div class="checkbox-container">
-        <input type="checkbox" id="anonimo" name="anonimo">
-        <label for="anonimo">Responder como anónimo</label>
-      </div>
-
-      <label>Correo electrónico</label>
-      <input type="email" id="emailExterno" name="correo" placeholder="nombre@ejemplo.com">
-    </div>
-
-    <!-- BOTÓN CONTINUAR -->
-    <button type="button" id="btnContinuar">Continuar</button>
-
-    <!-- BLOQUE MEJORA -->
-    <div id="mejoraBlock" class="hidden">
-      <label>¿Dónde detectaste la mejora?</label>
-      <select id="lugarMejora" name="lugarMejora">
-        <option value="">Selecciona una opción</option>
-        <option value="Almacén">Almacén</option>
-        <option value="Producción">Producción</option>
-        <option value="Oficinas">Oficinas</option>
-        <option value="Vestuarios">Vestuarios</option>
-        <option value="Zonas Comunes">Zonas Comunes</option>
-        <option value="Otros">Otros</option>
-      </select>
-
-      <div id="otrosBlock" class="hidden">
-        <label>Indica dónde</label>
-        <input type="text" id="otrosLugar" name="otrosLugar" style="text-transform: uppercase">
-      </div>
-
-      <div id="propuestaBlock" class="hidden">
-        <label>Describe la propuesta de mejora de seguridad</label>
-        <textarea id="propuesta" name="propuesta" rows="6" placeholder="Describe aquí tu propuesta..." maxlength="500" style="width:100%;"></textarea>
-        <div id="contadorPropuesta">0 / 500</div>
-
-        <label for="fotosAdjuntas" style="cursor:pointer; color: green; font-weight:600;">📎 Adjuntar fotos</label>
-        <input type="file" id="fotosAdjuntas" name="fotosAdjuntas" accept="image/*" multiple>
-        <input type="hidden" name="to_email" value="peimadin@gmail.com">
-
-        <button type="submit" id="btnEnviar">Enviar</button>
-      </div>
-    </div>
-  </form>
-</div>
-
-<script src="app.js"></script>
+  <footer>
+    <p>Formulario enviado automáticamente desde el sistema Saica.</p>
+  </footer>
 </body>
 </html>
+
+
 
