@@ -29,7 +29,6 @@ const contadorPropuesta = document.getElementById("contadorPropuesta");
 const fotosAdjuntas = document.getElementById("fotosAdjuntas");
 
 const form = document.getElementById("formulario");
-
 let SAICA_DATA = {};
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
@@ -139,24 +138,26 @@ propuesta.addEventListener("input", () => contadorPropuesta.textContent = `${pro
 document.querySelector('label[for="fotosAdjuntas"]').addEventListener("click", () => fotosAdjuntas.click());
 
 // ===== ENVÍO EMAILJS CON sendForm =====
+emailjs.init('paou8pXUBiwdx5WuH'); // reemplaza con tu User ID de EmailJS
+
 form.addEventListener("submit", e => {
   e.preventDefault();
 
+  // Validaciones
   if (!propuesta.value.trim()) { alert("Debes describir la propuesta"); propuesta.focus(); return; }
   if (tipoPersona.value === "externo" && !emailRegex.test(emailExterno.value.trim())) { alert("Introduce un correo válido"); emailExterno.focus(); return; }
 
-  // Inicializa EmailJS (solo una vez al cargar la página)
-  emailjs.init('paou8pXUBiwdx5WuH'); // Reemplaza con tu User ID de EmailJS
-
-  emailjs.sendForm('service_o6s3ygm','template_6cynxub', form)
+  // Enviar el formulario completo con archivos adjuntos
+  emailjs.sendForm('service_o6s3ygm', 'template_6cynxub', form)
     .then(() => {
       alert("Formulario enviado correctamente. ¡Gracias!");
       form.reset();
       location.reload();
     })
     .catch(err => {
-      console.error(err);
+      console.error('Error enviando el formulario:', err);
       alert("Error enviando el formulario, intenta nuevamente.");
     });
 });
+
 
