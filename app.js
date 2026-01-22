@@ -25,6 +25,7 @@ const otrosBlock = document.getElementById("otrosBlock");
 const otrosLugar = document.getElementById("otrosLugar");
 const propuestaBlock = document.getElementById("propuestaBlock");
 const propuesta = document.getElementById("propuesta");
+const contadorPropuesta = document.getElementById("contadorPropuesta");
 
 let SAICA_DATA = {};
 
@@ -113,7 +114,7 @@ anonimo.addEventListener("change", () => {
   if (anonimo.checked) nombreExterno.value = "";
 });
 
-// ===== FUNCIÓN BLOQUEO =====
+// ===== BLOQUEO CAMPOS INICIALES =====
 function bloquearDatosIniciales() {
   [
     tipoPersona,
@@ -129,6 +130,7 @@ function bloquearDatosIniciales() {
 
 // ===== CONTINUAR =====
 btnContinuar.addEventListener("click", () => {
+  // Validaciones generales
   if (!tipoPersona.value) {
     alert("Selecciona el tipo de persona");
     return;
@@ -143,7 +145,7 @@ btnContinuar.addEventListener("click", () => {
 
   if (tipoPersona.value === "externo") {
     if (!emailRegex.test(emailExterno.value.trim())) {
-      alert("Introduce un correo electrónico válido (ejemplo: nombre@empresa.com)");
+      alert("Introduce un correo electrónico válido (ej: nombre@empresa.com)");
       return;
     }
 
@@ -153,6 +155,7 @@ btnContinuar.addEventListener("click", () => {
     }
   }
 
+  // Mostrar bloque mejora
   mejoraBlock.classList.remove("hidden");
   btnContinuar.disabled = true;
   bloquearDatosIniciales();
@@ -180,24 +183,18 @@ otrosLugar.addEventListener("input", () => {
   propuestaBlock.classList.toggle("hidden", !otrosLugar.value.trim());
 });
 
-const contadorPropuesta = document.getElementById("contadorPropuesta");
-
-// Contador en tiempo real
+// ===== CONTADOR DE PROYECTO =====
 propuesta.addEventListener("input", () => {
   const length = propuesta.value.length;
   contadorPropuesta.textContent = `${length} / 500`;
 });
 
-// Validación antes de enviar
+// ===== VALIDACIÓN FINAL DEL FORM =====
 const form = document.getElementById("formulario");
-
-form.addEventListener("submit", (e) => {
-  // Si el bloque de propuesta está visible, es obligatorio escribir algo
+form.addEventListener("submit", e => {
   if (!propuestaBlock.classList.contains("hidden") && !propuesta.value.trim()) {
     alert("Debes describir la propuesta de mejora antes de continuar");
     propuesta.focus();
-    e.preventDefault(); // evitar envío
+    e.preventDefault();
   }
 });
-
-
