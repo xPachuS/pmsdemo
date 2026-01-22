@@ -178,8 +178,7 @@ otrosLugar.addEventListener("input", () => {
 
 // ===== CONTADOR DE PROYECTO =====
 propuesta.addEventListener("input", () => {
-  const length = propuesta.value.length;
-  contadorPropuesta.textContent = `${length} / 500`;
+  contadorPropuesta.textContent = `${propuesta.value.length} / 500`;
 });
 
 // ===== SUBIR FOTOS =====
@@ -187,7 +186,6 @@ const labelFotos = document.querySelector('label[for="fotosAdjuntas"]');
 labelFotos && labelFotos.addEventListener("click", () => fotosAdjuntas.click());
 
 // ===== ENVÍO CON EMAILJS =====
-// Asegúrate de incluir el script de EmailJS y hacer emailjs.init('sWWKZZVhXL3sE1bp6');
 form.addEventListener("submit", e => {
   e.preventDefault();
 
@@ -209,22 +207,26 @@ form.addEventListener("submit", e => {
   };
 
   // Adjuntar fotos si existen
-  const file = fotosAdjuntas.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = function(evt) {
-      data.attachment = evt.target.result;
-      enviarEmailJS(data);
-    };
-    reader.readAsDataURL(file);
+  if (fotosAdjuntas.files.length > 0) {
+    const attachments = [];
+    let loaded = 0;
+    Array.from(fotosAdjuntas.files).forEach(file => {
+      const reader = new FileReader();
+      reader.onload = evt => {
+        attachments.push({ name: file.name, data: evt.target.result });
+        loaded++;
+        if (loaded === fotosAdjuntas.files.length) enviarEmailJS(data, attachments);
+      };
+      reader.readAsDataURL(file);
+    });
   } else {
-    enviarEmailJS(data);
+    enviarEmailJS(data, []);
   }
 });
 
 // ===== FUNCIÓN ENVIAR EMAIL =====
-function enviarEmailJS(data) {
-  emailjs.send('service_o6s3ygm', 'template_6cynxub', data)
+function enviarEmailJS(data, attachments) {
+  emailjs.send('service_o6s3ygm', 'template_6cynxub', { ...data, attachments })
     .then(() => {
       alert("Formulario enviado correctamente. ¡Gracias!");
       form.reset();
@@ -235,7 +237,4 @@ function enviarEmailJS(data) {
       alert("Error enviando el formulario, intenta nuevamente.");
     });
 }
-
-
-
 
